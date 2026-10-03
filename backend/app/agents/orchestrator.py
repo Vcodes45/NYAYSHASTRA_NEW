@@ -34,6 +34,7 @@ class AgentOrchestrator:
         self.llm_service = llm_service
         self.statute_service = statute_service
         self.case_service = case_service
+        self.services_initialized = False
         
         # Initialize agents
         self.agents: List[BaseAgent] = [
@@ -82,6 +83,9 @@ class AgentOrchestrator:
                         agent.vector_store = self.vector_store
             except Exception as e:
                 logger.warning(f"Vector store not available in orchestrator: {e}")
+
+        self.services_initialized = True
+        logger.info("✅ All orchestrator services initialized")
 
     async def process_query(self, query: str, language: str = "en", 
                            session_id: Optional[str] = None,
