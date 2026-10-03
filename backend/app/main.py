@@ -42,15 +42,26 @@ async def lifespan(app: FastAPI):
     # Initialize database explicitly so tables are created on Render start
     init_db()
     
-    # Initialize AI Services (Downloads HuggingFace model before port binds)
-    # This prevents the 60s Render load balancer timeout on the first request!
-    try:
-        from app.agents.orchestrator import get_orchestrator
-        orchestrator = get_orchestrator()
-        await orchestrator._ensure_services()
-        logger.info("AI Services & Vector Store Initialized successfully!")
-    except Exception as e:
-        logger.error(f"Failed to pre-initialize AI Services: {e}")
+    # We MUST start the AI model loading in a background thread so Uvicorn can bind 
+    # to port 8000 IMMEDIATELY. Otherwise, Render's 90-second Port Scan Timeout kills us!
+    def init_bg():
+        try:
+            import asyncio
+            from app.agents.orchestrator import get_orchestrator
+            
+            # Create a new event loop for this background thread
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            
+            orchestrator = get_orchestrator()
+            loop.run_until_complete(orchestrator._ensure_services())
+            loop.close()
+            logger.info("✅ AI Services & Vector Store Initialized successfully in background!")
+        except Exception as e:
+            logger.error(f"Failed to pre-initialize AI Services: {e}")
+            
+    import threading
+    threading.Thread(target=init_bg, daemon=True).start()
     
     logger.info("NyayGuru AI Pro ready for traffic!")
     

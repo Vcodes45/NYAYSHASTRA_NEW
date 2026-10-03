@@ -95,9 +95,26 @@ class AgentOrchestrator:
         print(f"[ORCHESTRATOR] Language: {language}")
         print(f"{'='*60}\n")
         
-        await self._ensure_services()
-        
-        print(f"[ORCHESTRATOR] Services ensured - vector_store: {self.vector_store is not None}, llm: {self.llm_service is not None}")
+        if not self.services_initialized:
+            # If still warming up in background thread, tell the user gracefully
+            import uuid
+            from datetime import datetime
+            return {
+                "id": str(uuid.uuid4()),
+                "session_id": session_id or str(uuid.uuid4()),
+                "role": "assistant",
+                "content": "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!",
+                "content_hi": "⚠️ **न्यायगुरु एआई प्रो अभी शुरू हो रहा है।**\n\nचूंकि यह एक मुफ्त डिप्लॉयमेंट है, भारी एआई भाषा मॉडल को मेमोरी में लोड होने में एक या दो मिनट लगते हैं। कृपया लगभग 60 सेकंड प्रतीक्षा करें और फिर से प्रयास करें!",
+                "citations": [],
+                "statutes": [],
+                "case_laws": [],
+                "ipc_bns_mappings": [],
+                "agent_pipeline": [],
+                "detected_domain": "all",
+                "detected_language": language,
+                "execution_time_seconds": 0,
+                "timestamp": datetime.now().isoformat()
+            }
         
         if not session_id:
             session_id = str(uuid.uuid4())
@@ -145,6 +162,22 @@ class AgentOrchestrator:
                                       domain: Optional[str] = None) -> AsyncGenerator[ChatStreamChunk, None]:
         """Process query with streaming updates for real-time UI."""
         
+        if not self.services_initialized:
+            import uuid
+            yield ChatStreamChunk(
+                type="agent_start",
+                data={"agent": "System"}
+            )
+            yield ChatStreamChunk(
+                type="token",
+                data={"text": "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!"}
+            )
+            yield ChatStreamChunk(
+                type="complete",
+                data={"session_id": session_id or str(uuid.uuid4())}
+            )
+            return
+            
         await self._ensure_services()
         
         if not session_id:
