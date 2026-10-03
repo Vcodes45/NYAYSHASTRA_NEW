@@ -47,7 +47,7 @@ const Index = () => {
     sendMessage: sendApiMessage,
     loadSession: loadApiSession,
     clearMessages: clearApiMessages,
-  } = useChat({ language, useStreaming: false });
+  } = useChat({ language, useStreaming: true });
 
   // Local state for fallback mode
   const [localMessages, setLocalMessages] = useState<Message[]>([]);
