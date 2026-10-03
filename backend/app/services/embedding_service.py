@@ -11,7 +11,7 @@ import numpy as np
 
 # CRITICAL: Force CPU-only mode to prevent OOM crashes
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-os.environ['OMP_NUM_THREADS'] = '4'
+os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 
 logger = logging.getLogger(__name__)
@@ -39,15 +39,8 @@ class EmbeddingService:
         """
         from app.config import settings
         
-        # Detected cloud environment with limited RAM
-        is_cloud = os.environ.get('RENDER', 'false') == 'true' or os.environ.get('RAILWAY_STATIC_URL') is not None
-        
         if model_name:
             self.model_name = model_name
-        elif is_cloud:
-            # FORCE a tiny model for cloud to prevent OOM (512MB RAM limit)
-            logger.info("Cloud environment detected. Using tiny embedding model to save RAM.")
-            self.model_name = "sentence-transformers/all-MiniLM-L6-v2"
         else:
             self.model_name = settings.embedding_model
             
