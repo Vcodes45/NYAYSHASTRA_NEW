@@ -176,8 +176,24 @@ class AgentOrchestrator:
                 data={"agent": "System"}
             )
             yield ChatStreamChunk(
-                type="token",
-                data={"text": "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!"}
+                type="agent_status",
+                data={
+                    "agent": "system",
+                    "status": "processing",
+                    "name": "System Initialization",
+                    "name_hi": "सिस्टम प्रारंभ"
+                }
+            )
+            yield ChatStreamChunk(
+                type="response",
+                data={
+                    "content": "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!",
+                    "content_hi": "⚠️ **न्यायगुरु एआई प्रो अभी शुरू हो रहा है।**\n\nचूंकि यह एक मुफ्त डिप्लॉयमेंट है, भारी एआई भाषा मॉडल को मेमोरी में लोड होने में एक या दो मिनट लगते हैं। कृपया लगभग 60 सेकंड प्रतीक्षा करें और फिर से प्रयास करें!",
+                    "citations": [],
+                    "statutes": [],
+                    "case_laws": [],
+                    "ipc_bns_mappings": []
+                }
             )
             yield ChatStreamChunk(
                 type="complete",
