@@ -28,6 +28,7 @@ import {
 import { jsPDF } from "jspdf";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
+import AgentOrchestration3D from "./AgentOrchestration3D";
 import { useChatHistory } from "@/hooks/useApi";
 import { ConsultLawyerButton } from "./ConsultLawyerButton";
 
@@ -120,6 +121,8 @@ interface ChatInterfaceProps {
   messages: Message[];
   onSendMessage: (message: string, domain?: string) => void;
   isProcessing: boolean;
+  activeAgent?: string | null;
+  completedAgents?: string[];
   language: "en" | "hi";
   selectedDomain?: string;
   onLoadSession?: (sessionId: string) => void;
@@ -174,6 +177,8 @@ export const ChatInterface = ({
   messages,
   onSendMessage,
   isProcessing,
+  activeAgent,
+  completedAgents,
   language,
   selectedDomain: propDomain,
   onLoadSession,
@@ -1407,35 +1412,14 @@ export const ChatInterface = ({
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex justify-start"
+              className="flex justify-start w-full mt-4"
             >
-              <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl rounded-bl-md px-6 py-4 shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium text-foreground">
-                      {language === "en"
-                        ? "Analyzing your legal query..."
-                        : "आपके कानूनी प्रश्न का विश्लेषण..."}
-                    </span>
-                    <div className="flex gap-1 mt-1">
-                      <span
-                        className="h-2 w-2 rounded-full bg-primary animate-bounce"
-                        style={{ animationDelay: "0ms" }}
-                      />
-                      <span
-                        className="h-2 w-2 rounded-full bg-primary animate-bounce"
-                        style={{ animationDelay: "150ms" }}
-                      />
-                      <span
-                        className="h-2 w-2 rounded-full bg-primary animate-bounce"
-                        style={{ animationDelay: "300ms" }}
-                      />
-                    </div>
-                  </div>
-                </div>
+              <div className="w-full">
+                <AgentOrchestration3D 
+                  activeAgent={activeAgent || "system"}
+                  language={language}
+                  completedAgents={completedAgents || []}
+                />
               </div>
             </motion.div>
           )}

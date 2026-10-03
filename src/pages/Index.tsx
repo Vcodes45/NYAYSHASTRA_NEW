@@ -274,6 +274,8 @@ const Index = () => {
                 handleSendMessage(content, domain || selectedDomain);
               }}
               isProcessing={processing}
+              activeAgent={currentActiveAgent}
+              completedAgents={currentCompletedAgents}
               language={language}
               selectedDomain={selectedDomain}
               onLoadSession={async (sessionId) => {
