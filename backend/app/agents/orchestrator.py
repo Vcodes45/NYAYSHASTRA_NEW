@@ -99,12 +99,15 @@ class AgentOrchestrator:
             # If still warming up in background thread, tell the user gracefully
             import uuid
             from datetime import datetime
+            warmup_msg = "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!"
+            warmup_msg_hi = "⚠️ **न्यायगुरु एआई प्रो अभी शुरू हो रहा है।**\n\nचूंकि यह एक मुफ्त डिप्लॉयमेंट है, भारी एआई भाषा मॉडल को मेमोरी में लोड होने में एक या दो मिनट लगते हैं। कृपया लगभग 60 सेकंड प्रतीक्षा करें और फिर से प्रयास करें!"
             return {
                 "id": str(uuid.uuid4()),
                 "session_id": session_id or str(uuid.uuid4()),
-                "role": "assistant",
-                "content": "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!",
-                "content_hi": "⚠️ **न्यायगुरु एआई प्रो अभी शुरू हो रहा है।**\n\nचूंकि यह एक मुफ्त डिप्लॉयमेंट है, भारी एआई भाषा मॉडल को मेमोरी में लोड होने में एक या दो मिनट लगते हैं। कृपया लगभग 60 सेकंड प्रतीक्षा करें और फिर से प्रयास करें!",
+                "response": {
+                    "content": warmup_msg,
+                    "content_hi": warmup_msg_hi,
+                },
                 "citations": [],
                 "statutes": [],
                 "case_laws": [],
