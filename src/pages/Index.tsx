@@ -276,6 +276,7 @@ const Index = () => {
               isProcessing={processing}
               activeAgent={currentActiveAgent}
               completedAgents={currentCompletedAgents}
+              processingAgents={currentProcessingAgents}
               language={language}
               selectedDomain={selectedDomain}
               onLoadSession={async (sessionId) => {

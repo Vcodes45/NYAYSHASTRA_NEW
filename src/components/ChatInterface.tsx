@@ -123,6 +123,7 @@ interface ChatInterfaceProps {
   isProcessing: boolean;
   activeAgent?: string | null;
   completedAgents?: string[];
+  processingAgents?: string[];
   language: "en" | "hi";
   selectedDomain?: string;
   onLoadSession?: (sessionId: string) => void;
@@ -179,6 +180,7 @@ export const ChatInterface = ({
   isProcessing,
   activeAgent,
   completedAgents,
+  processingAgents,
   language,
   selectedDomain: propDomain,
   onLoadSession,
@@ -1417,7 +1419,7 @@ export const ChatInterface = ({
               <div className="w-full">
                 <AgentOrchestration3D 
                   activeAgent={activeAgent || "system"}
-                  language={language}
+                  processingAgents={processingAgents || []}
                   completedAgents={completedAgents || []}
                 />
               </div>

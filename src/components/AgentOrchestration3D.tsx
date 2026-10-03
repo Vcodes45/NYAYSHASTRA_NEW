@@ -15,6 +15,7 @@ interface Agent {
 interface AgentOrchestration3DProps {
   activeAgent: string | null;
   processingAgents: string[];
+  completedAgents?: string[];
 }
 
 const agents: Agent[] = [
@@ -330,7 +331,8 @@ const Scene = ({
 // Main component
 export const AgentOrchestration3D = ({
   activeAgent,
-  processingAgents
+  processingAgents,
+  completedAgents,
 }: AgentOrchestration3DProps) => {
   return (
     <motion.div
@@ -348,6 +350,7 @@ export const AgentOrchestration3D = ({
           <Scene
             activeAgent={activeAgent}
             processingAgents={processingAgents}
+            completedAgents={completedAgents}
           />
         </Suspense>
       </Canvas>
