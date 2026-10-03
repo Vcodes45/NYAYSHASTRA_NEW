@@ -41,6 +41,7 @@ CHROMA_PERSIST_DIR=./chroma_db
 EMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 
 # AI/LLM Configuration (Add your API keys)
+GEMINI_API_KEY=
 OPENAI_API_KEY=
 GROQ_API_KEY=
 

@@ -1,0 +1,100 @@
+nyayashastra-backend  | [VECTOR_STORE]   Limit: 5
+nyayashastra-backend  | [VECTOR_STORE]   Collection has 0 documents
+nyayashastra-backend  | [VECTOR_STORE]   Using where filter: {'domain': 'Criminal'}
+nyayashastra-backend  | [VECTOR_STORE]   Generating embedding...
+nyayashastra-backend  | [VECTOR_STORE]   Embedding generated, length: 384
+nyayashastra-backend  | [VECTOR_STORE]   Querying ChromaDB...
+nyayashastra-backend  | [VECTOR_STORE]   Raw results: 0 documents
+nyayashastra-backend  | [VECTOR_STORE]   No results with filter, retrying without filter...
+nyayashastra-backend  | 2026-10-02 18:20:50,017 - app.services.vector_store - INFO - No results with domain filter 'Criminal', searching all documents
+nyayashastra-backend  | [VECTOR_STORE]   Without filter: 0 documents
+nyayashastra-backend  | [VECTOR_STORE]   WARNING: No results found!
+nyayashastra-backend  | [VECTOR_STORE]   Returning 0 documents
+nyayashastra-backend  | 2026-10-02 18:20:50,018 - app.services.vector_store - INFO - Legal documents search returned 0 results (domain: Criminal)
+nyayashastra-backend  | [VECTOR_STORE]   search_statutes returning 0 results
+nyayashastra-backend  | [STATUTE_AGENT]   search_statutes returned 0 results
+nyayashastra-backend  | [STATUTE_AGENT]   Calling search_documents...
+nyayashastra-backend  | 
+nyayashastra-backend  | [VECTOR_STORE] search_documents called
+nyayashastra-backend  | [VECTOR_STORE]   Query: ohk punishment for robbery??...
+nyayashastra-backend  | [VECTOR_STORE]   Domain: Criminal, Category: None
+nyayashastra-backend  | [VECTOR_STORE]   legal_documents_collection has 0 docs
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.services.vector_store - INFO - Document search returned 3 results (domain filter: Criminal)
+nyayashastra-backend  | [STATUTE_AGENT]   search_documents returned 3 results
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.statute_agent - INFO - [STATUTE AGENT] Semantic search returned 0 statutes, 3 documents
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.statute_agent - INFO - [STATUTE AGENT] Added doc: media_1790963857509.pdf...
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.statute_agent - INFO - [STATUTE AGENT] Added doc: media_1790963857509.pdf...
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.statute_agent - INFO - [STATUTE AGENT] Added doc: media_1790963857332.pdf...
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.statute_agent - INFO - Retrieved 3 statutes, 0 mappings from database
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.base - INFO - Agent Statute Retrieval completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Statute Retrieval completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.orchestrator - INFO - Agent Statute Retrieval completed
+nyayashastra-backend  | 
+nyayashastra-backend  | [ORCHESTRATOR] >>> Running agent: Case Law Intelligence
+nyayashastra-backend  | 2026-10-02 18:20:50,261 - app.agents.base - INFO - Agent Case Law Intelligence started processing
+nyayashastra-backend  | 2026-10-02 18:20:50,264 - app.agents.case_agent - INFO - Found 0 cases for domain Criminal
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.case_agent - INFO - Retrieved 0 case laws from database
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.base - INFO - Agent Case Law Intelligence completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Case Law Intelligence completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.orchestrator - INFO - Agent Case Law Intelligence completed
+nyayashastra-backend  | 
+nyayashastra-backend  | [ORCHESTRATOR] >>> Running agent: Regulatory Filter
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.base - INFO - Agent Regulatory Filter started processing
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.regulatory_agent - INFO - Applied regulatory filter for domain: Criminal
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.regulatory_agent - INFO - Applicable acts: ['IPC', 'BNS', 'CrPC', 'BNSS', 'IEA', 'BSA']
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.base - INFO - Agent Regulatory Filter completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Regulatory Filter completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.orchestrator - INFO - Agent Regulatory Filter completed
+nyayashastra-backend  | 
+nyayashastra-backend  | [ORCHESTRATOR] >>> Running agent: Citation Agent
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.base - INFO - Agent Citation Agent started processing
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.citation_agent - INFO - CitationAgent: Processing 3 statutes, 0 case_laws
+nyayashastra-backend  | 2026-10-02 18:20:50,276 - app.agents.citation_agent - INFO - CitationAgent: Creating citation for statute: unknown
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.citation_agent - INFO - CitationAgent: Creating citation for statute: unknown
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.citation_agent - INFO - CitationAgent: Creating citation for statute: unknown
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.citation_agent - INFO - Generated 1 verified citations
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.base - INFO - Agent Citation Agent completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Citation Agent completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.orchestrator - INFO - Agent Citation Agent completed
+nyayashastra-backend  | 
+nyayashastra-backend  | [ORCHESTRATOR] >>> Running agent: Summarization
+nyayashastra-backend  | 2026-10-02 18:20:50,278 - app.agents.base - INFO - Agent Summarization started processing
+nyayashastra-backend  | 2026-10-02 18:20:50,279 - app.agents.summarization_agent - INFO - Summarization completed
+nyayashastra-backend  | 2026-10-02 18:20:50,279 - app.agents.base - INFO - Agent Summarization completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Summarization completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,279 - app.agents.orchestrator - INFO - Agent Summarization completed
+nyayashastra-backend  | 
+nyayashastra-backend  | [ORCHESTRATOR] >>> Running agent: Response Synthesis
+nyayashastra-backend  | 2026-10-02 18:20:50,279 - app.agents.base - INFO - Agent Response Synthesis started processing
+nyayashastra-backend  | INFO:     192.168.65.1:57936 - "GET /api/stats/summary HTTP/1.1" 200 OK
+nyayashastra-backend  | 2026-10-02 18:20:50,284 - app.services.ollama_service - ERROR - Failed to connect to Ollama: All connection attempts failed
+nyayashastra-backend  | 2026-10-02 18:20:50,284 - app.services.ollama_service - ERROR - Make sure Ollama is running:
+nyayashastra-backend  | 1. Install Ollama: https://ollama.ai/download
+nyayashastra-backend  | 2. Start Ollama: ollama serve
+nyayashastra-backend  | 3. Pull model: ollama pull llama3:8b-instruct-q4_K_M
+nyayashastra-backend  | 2026-10-02 18:20:50,284 - app.agents.response_agent - ERROR - Failed to initialize Ollama service in ResponseAgent: All connection attempts failed
+nyayashastra-backend  | 2026-10-02 18:20:50,284 - app.agents.response_agent - WARNING - Using template response as LLM generation failed
+nyayashastra-backend  | 2026-10-02 18:20:50,285 - app.agents.response_agent - INFO - Response synthesis completed in language: en
+nyayashastra-backend  | 2026-10-02 18:20:50,285 - app.agents.base - INFO - Agent Response Synthesis completed
+nyayashastra-backend  | [ORCHESTRATOR] <<< Agent Response Synthesis completed
+nyayashastra-backend  | [ORCHESTRATOR]     - statutes count: 3
+nyayashastra-backend  | [ORCHESTRATOR]     - case_laws count: 0
+nyayashastra-backend  | [ORCHESTRATOR]     - is_relevant: True
+nyayashastra-backend  | 2026-10-02 18:20:50,285 - app.agents.orchestrator - INFO - Agent Response Synthesis completed
+nyayashastra-backend  | 2026-10-02 18:20:50,289 - app.services.chat_service - INFO - Saved assistant message to session 0b17c6f4-66da-41ae-aa48-2b1f92d4d304
+nyayashastra-backend  | INFO:     192.168.65.1:17328 - "GET /api/statutes/?limit=1 HTTP/1.1" 200 OK

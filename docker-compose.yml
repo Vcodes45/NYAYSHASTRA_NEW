@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   # Backend API
@@ -14,6 +14,9 @@ services:
       - CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://frontend
       - CHROMA_PERSIST_DIR=/app/chroma_db
       - USE_LOCAL_LLM=false
+      - GEMINI_MODEL=gemini-3.8-flash
+    env_file:
+      - .env
     volumes:
       - ./backend/chroma_db:/app/chroma_db
       - ./backend/data:/app/data

@@ -61,17 +61,15 @@ class AgentOrchestrator:
         """Ensure all services are initialized and shared with agents."""
         if not self.llm_service:
             try:
-                # Use Ollama service for local LLM
-                from app.services.ollama_service import OllamaService
-                self.llm_service = OllamaService()
-                await self.llm_service.initialize()
-                logger.info("✅ Ollama service initialized in orchestrator")
+                from app.services.llm_service import get_llm_service
+                self.llm_service = await get_llm_service()
+                logger.info("✅ LLM service initialized in orchestrator")
                 # Update agents that need LLM
                 for agent in self.agents:
                     if hasattr(agent, 'llm_service') and not agent.llm_service:
                         agent.llm_service = self.llm_service
             except Exception as e:
-                logger.error(f"Failed to initialize Ollama service in orchestrator: {e}")
+                logger.error(f"Failed to initialize LLM service in orchestrator: {e}")
                 logger.warning("Queries will use fallback responses")
 
         if not self.vector_store:

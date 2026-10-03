@@ -16,6 +16,10 @@ build/
 backend/build/
 backend/dist/
 *.spec
+chroma_db/
+data/
+nyayguru.db
+backend/nyayguru.db
 
 # Python
 __pycache__/

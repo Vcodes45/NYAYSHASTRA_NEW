@@ -38,13 +38,11 @@ class ResponseSynthesisAgent(BaseAgent):
         # Ensure LLM service is available
         if not self.llm_service:
             try:
-                # Use Ollama service for local LLM
-                from app.services.ollama_service import OllamaService
-                self.llm_service = OllamaService()
-                await self.llm_service.initialize()
-                logger.info("✅ Ollama service initialized in ResponseAgent")
+                from app.services.llm_service import get_llm_service
+                self.llm_service = await get_llm_service()
+                logger.info("✅ LLM service initialized in ResponseAgent")
             except Exception as e:
-                logger.error(f"Failed to initialize Ollama service in ResponseAgent: {e}")
+                logger.error(f"Failed to initialize LLM service in ResponseAgent: {e}")
         
         # Check if query was rejected due to domain mismatch
         if not context.is_relevant and context.rejection_message:

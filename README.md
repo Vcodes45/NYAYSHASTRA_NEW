@@ -167,6 +167,7 @@ CORS_ORIGINS=http://localhost:5173
 DATABASE_URL=sqlite:///./nyayguru.db
 
 # AI/LLM (Choose one)
+GEMINI_API_KEY=your-gemini-api-key
 OPENAI_API_KEY=sk-...
 GROQ_API_KEY=gsk_...
 USE_LOCAL_LLM=false

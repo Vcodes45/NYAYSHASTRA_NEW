@@ -55,13 +55,12 @@ class QueryUnderstandingAgent(BaseAgent):
         
         # 3. Use LLM for intelligent domain detection
         from app.services.llm_router import LLMRouter
-        from app.services.ollama_service import OllamaService
+        from app.services.llm_service import get_llm_service
         
         # Initialize LLM router
         if not hasattr(self, 'llm_router'):
-            ollama = OllamaService()
-            await ollama.initialize()
-            self.llm_router = LLMRouter(ollama)
+            llm = await get_llm_service()
+            self.llm_router = LLMRouter(llm)
         
         if context.specified_domain and context.specified_domain != "all":
             # User selected a specific domain - verify it matches the query

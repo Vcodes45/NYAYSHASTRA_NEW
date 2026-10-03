@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
     groq_model: str = "llama-3.3-70b-versatile"
     
+    # Gemini API
+    gemini_api_key: str = ""
+    gemini_model: str = "gemini-2.5-pro"
+    
     # Local LLM
     use_local_llm: bool = False
     local_llm_endpoint: str = "http://localhost:11434/api"

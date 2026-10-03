@@ -31,7 +31,7 @@ if (-not (Test-Path .env)) {
     Write-Host "WARNING: .env file not found!" -ForegroundColor Yellow
     Write-Host "Creating .env file from template..." -ForegroundColor Cyan
     
-    $envContent = "# Backend Configuration`nAPI_HOST=0.0.0.0`nAPI_PORT=8000`nAPI_DEBUG=false`nCORS_ORIGINS=http://localhost:5173`n`n# Database`nDATABASE_URL=sqlite:///./nyayguru.db`n`n# Vector Database`nCHROMA_PERSIST_DIR=./chroma_db`nEMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`n`n# AI/LLM Configuration`nOPENAI_API_KEY=`nGROQ_API_KEY=`n`n# Local LLM`nUSE_LOCAL_LLM=false`nLOCAL_LLM_ENDPOINT=http://localhost:11434/api`n`n# Security`nSECRET_KEY=nyayashastra-secret-key-change-in-production-min-32-chars`n`n# Frontend Configuration`nVITE_API_URL=http://localhost:8000`nVITE_CLERK_PUBLISHABLE_KEY=pk_test_YXBwYXJlbnQtdHJvdXQtNTAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+    $envContent = "# Backend Configuration`nAPI_HOST=0.0.0.0`nAPI_PORT=8000`nAPI_DEBUG=false`nCORS_ORIGINS=http://localhost:5173`n`n# Database`nDATABASE_URL=sqlite:///./nyayguru.db`n`n# Vector Database`nCHROMA_PERSIST_DIR=./chroma_db`nEMBEDDING_MODEL=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`n`n# AI/LLM Configuration`nGEMINI_API_KEY=`nOPENAI_API_KEY=`nGROQ_API_KEY=`n`n# Local LLM`nUSE_LOCAL_LLM=false`nLOCAL_LLM_ENDPOINT=http://localhost:11434/api`n`n# Security`nSECRET_KEY=nyayashastra-secret-key-change-in-production-min-32-chars`n`n# Frontend Configuration`nVITE_API_URL=http://localhost:8000`nVITE_CLERK_PUBLISHABLE_KEY=pk_test_YXBwYXJlbnQtdHJvdXQtNTAuY2xlcmsuYWNjb3VudHMuZGV2JA"
     
     Set-Content -Path .env -Value $envContent
     Write-Host "SUCCESS: .env file created!" -ForegroundColor Green
