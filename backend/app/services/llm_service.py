@@ -158,7 +158,6 @@ class LLMService:
                         json={
                             "model": self.gemini_model,
                             "messages": [
-                                {"role": "system", "content": SYSTEM_PROMPT},
                                 {"role": "user", "content": prompt}
                             ],
                             "max_tokens": max_tokens,
@@ -168,7 +167,11 @@ class LLMService:
                     
                     if response.status_code == 200:
                         data = response.json()
-                        return data["choices"][0]["message"]["content"]
+                        try:
+                            return data["choices"][0]["message"]["content"]
+                        except KeyError:
+                            logger.error(f"Missing 'content' in Gemini response: {data}")
+                            raise
                     elif response.status_code in (429, 503) and attempt < max_retries - 1:
                         wait_time = 2 ** (attempt + 1)
                         logger.warning(f"Gemini API returned {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
@@ -202,7 +205,6 @@ class LLMService:
                     json={
                         "model": self.groq_model,
                         "messages": [
-                            {"role": "system", "content": SYSTEM_PROMPT},
                             {"role": "user", "content": prompt}
                         ],
                         "max_tokens": max_tokens,
@@ -235,7 +237,6 @@ class LLMService:
                     json={
                         "model": self.openai_model,
                         "messages": [
-                            {"role": "system", "content": SYSTEM_PROMPT},
                             {"role": "user", "content": prompt}
                         ],
                         "max_tokens": max_tokens,

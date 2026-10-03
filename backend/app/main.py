@@ -38,9 +38,10 @@ async def lifespan(app: FastAPI):
     """Application lifespan handler."""
     logger.info("Starting NyayGuru AI Pro (LIGHT STARTUP)...")
     
-    # DATABASE AND AI SERVICES INITIALIZATION REMOVED FROM STARTUP
-    # This prevents Render "No open ports detected" timeouts.
-    # Services will be initialized lazily on first request.
+    # Initialize database explicitly so tables are created on Render start
+    init_db()
+    
+    # AI Services initialized lazily on first request to avoid port timeout.
     
     logger.info("NyayGuru AI Pro ready for traffic!")
     

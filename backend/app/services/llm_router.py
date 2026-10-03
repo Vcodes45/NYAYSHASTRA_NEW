@@ -148,6 +148,8 @@ Answer with ONLY "yes" or "no"."""
             if not is_match:
                 # Detect correct domain
                 suggested_domain, _ = await self.detect_domain(query)
+                if suggested_domain == specified_domain:
+                    return True, specified_domain
                 logger.info(f"[LLM_ROUTER] Domain mismatch - query is {suggested_domain}, not {specified_domain}")
                 return False, suggested_domain
             

@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     
     # Gemini API
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.5-pro"
+    gemini_model: str = "gemini-1.5-flash"
     
     # Local LLM
     use_local_llm: bool = False

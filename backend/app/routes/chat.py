@@ -167,10 +167,12 @@ async def process_chat_message_stream(
             domain=request.domain
         )
         
+        session_id_str = session.session_id
+        
         # Save user message
         chat_service.save_message(
             db=db,
-            session_id=session.session_id,
+            session_id=session_id_str,
             role="user",
             content=request.content
         )
@@ -184,7 +186,7 @@ async def process_chat_message_stream(
             async for chunk in orchestrator.process_query_streaming(
                 query=request.content,
                 language=request.language.value,
-                session_id=session.session_id,
+                session_id=session_id_str,
                 domain=request.domain
             ):
                 # Capture final response for saving
@@ -202,7 +204,7 @@ async def process_chat_message_stream(
                     with get_db_context() as db_inner:
                         chat_service.save_message(
                             db=db_inner,
-                            session_id=session.session_id,
+                            session_id=session_id_str,
                             role="assistant",
                             content=final_response,
                             content_hi=final_response_hi,
@@ -311,19 +313,17 @@ def get_agents():
 @router.get("/history")
 def get_chat_history(
     limit: int = 20,
-    current_user: dict = Depends(get_current_user)
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
 ):
     """
     Get chat history for the current user.
     Returns a list of chat sessions with their titles and dates.
     """
-    from app.database import get_db
     from app.models import ChatSession, ChatMessage
     from sqlalchemy import desc
     
     try:
-        db = next(get_db())
-        
         # Query chat sessions for the current user
         user_id = current_user.get("user_id") if current_user else None
         
@@ -387,17 +387,15 @@ def get_chat_history(
 @router.get("/history/{session_id}")
 def get_session_messages(
     session_id: str,
-    current_user: dict = Depends(get_current_user)
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
 ):
     """
     Get all messages for a specific chat session.
     """
-    from app.database import get_db
     from app.models import ChatSession, ChatMessage
     
     try:
-        db = next(get_db())
-        
         # Find session
         session = db.query(ChatSession).filter(
             ChatSession.session_id == session_id
@@ -437,17 +435,15 @@ def get_session_messages(
 @router.delete("/history/{session_id}")
 def delete_session(
     session_id: str,
-    current_user: dict = Depends(get_current_user)
+    current_user: dict = Depends(get_current_user),
+    db = Depends(get_db)
 ):
     """
     Delete a chat session and all its messages.
     """
-    from app.database import get_db
     from app.models import ChatSession, ChatMessage
     
     try:
-        db = next(get_db())
-        
         # Find session
         session = db.query(ChatSession).filter(
             ChatSession.session_id == session_id
