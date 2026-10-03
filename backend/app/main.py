@@ -42,7 +42,15 @@ async def lifespan(app: FastAPI):
     # Initialize database explicitly so tables are created on Render start
     init_db()
     
-    # AI Services initialized lazily on first request to avoid port timeout.
+    # Initialize AI Services (Downloads HuggingFace model before port binds)
+    # This prevents the 60s Render load balancer timeout on the first request!
+    try:
+        from app.agents.orchestrator import get_orchestrator
+        orchestrator = get_orchestrator()
+        await orchestrator._ensure_services()
+        logger.info("AI Services & Vector Store Initialized successfully!")
+    except Exception as e:
+        logger.error(f"Failed to pre-initialize AI Services: {e}")
     
     logger.info("NyayGuru AI Pro ready for traffic!")
     
