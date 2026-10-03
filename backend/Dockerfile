@@ -17,7 +17,16 @@ RUN pip install --no-cache-dir --default-timeout=1000 -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p chroma_db data
+RUN mkdir -p chroma_db data .cache/huggingface
+
+# Fix PyTorch hanging on weak cloud instances and ensure cache is saved to /app
+ENV OMP_NUM_THREADS=1
+ENV TOKENIZERS_PARALLELISM=false
+ENV HF_HOME=/app/.cache/huggingface
+ENV TRANSFORMERS_CACHE=/app/.cache/huggingface
+
+# Make cache directory writable by all users (for Render's non-root execution)
+RUN chmod -R 777 .cache
 
 # Seed SQLite database and ingest PDFs into ChromaDB at build time!
 # This bakes the data into the Docker image, perfect for Render's free tier.

@@ -5,7 +5,8 @@ Production-grade AI Legal Assistant for Indian Law.
 
 import os
 # CRITICAL: Force CPU-only mode and limit threads
-os.environ['OMP_NUM_THREADS'] = '4'
+# Render free tier has severe CPU constraints. Using >1 thread causes context switching freezes.
+os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
