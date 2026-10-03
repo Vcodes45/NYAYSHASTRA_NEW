@@ -19,6 +19,10 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p chroma_db data
 
+# Seed SQLite database and ingest PDFs into ChromaDB at build time!
+# This bakes the data into the Docker image, perfect for Render's free tier.
+RUN python -m app.seed_database && python scripts/ingest_pdfs.py
+
 # Expose port
 EXPOSE 8000
 
