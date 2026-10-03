@@ -29,7 +29,8 @@ router = APIRouter(prefix="/api/chat", tags=["chat"])
 @router.post("/", response_model=dict)
 async def process_chat_message(
     request: ChatMessageRequest,
-    current_user: dict = Depends(get_current_user_optional)
+    current_user: dict = Depends(get_current_user_optional),
+    db = Depends(get_db)
 ):
     """
     Process a legal query through the multi-agent pipeline.
@@ -57,9 +58,6 @@ async def process_chat_message(
     chat_service = get_chat_service()
     
     try:
-        # Get database session
-        db = next(get_db())
-        
         # Get user ID from current_user
         user_id = current_user.get("user_id") if current_user else None
         
@@ -139,6 +137,7 @@ async def process_chat_message_stream(
     Messages are saved to database for chat history.
     """
     import logging
+    from app.database import get_db_context
     logger = logging.getLogger(__name__)
     
     # DEBUG: Log incoming streaming request
@@ -157,24 +156,24 @@ async def process_chat_message_stream(
     chat_service = get_chat_service()
     
     # Get database session and set up chat session
-    db = next(get_db())
     user_id = current_user.get("user_id") if current_user else None
     
-    session = chat_service.get_or_create_session(
-        db=db,
-        session_id=request.session_id,
-        user_id=user_id,
-        language=request.language.value,
-        domain=request.domain
-    )
-    
-    # Save user message
-    chat_service.save_message(
-        db=db,
-        session_id=session.session_id,
-        role="user",
-        content=request.content
-    )
+    with get_db_context() as db:
+        session = chat_service.get_or_create_session(
+            db=db,
+            session_id=request.session_id,
+            user_id=user_id,
+            language=request.language.value,
+            domain=request.domain
+        )
+        
+        # Save user message
+        chat_service.save_message(
+            db=db,
+            session_id=session.session_id,
+            role="user",
+            content=request.content
+        )
     
     async def generate():
         try:
@@ -200,15 +199,15 @@ async def process_chat_message_stream(
             # Save AI response to database after streaming completes
             if final_response:
                 try:
-                    db_inner = next(get_db())
-                    chat_service.save_message(
-                        db=db_inner,
-                        session_id=session.session_id,
-                        role="assistant",
-                        content=final_response,
-                        content_hi=final_response_hi,
-                        citations=final_citations
-                    )
+                    with get_db_context() as db_inner:
+                        chat_service.save_message(
+                            db=db_inner,
+                            session_id=session.session_id,
+                            role="assistant",
+                            content=final_response,
+                            content_hi=final_response_hi,
+                            citations=final_citations
+                        )
                 except Exception as save_error:
                     # Log but don't fail the stream
                     import logging
