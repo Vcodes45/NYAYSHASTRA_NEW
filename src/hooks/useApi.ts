@@ -143,6 +143,11 @@ export function useChat(options: UseChatOptions = {}) {
               case "complete":
                 setActiveAgent(null);
                 break;
+
+              case "error":
+                console.error("Server streamed an error:", chunk.data.message);
+                // We'll still wait for the response chunk which will contain the fallback message
+                break;
             }
           }
 
