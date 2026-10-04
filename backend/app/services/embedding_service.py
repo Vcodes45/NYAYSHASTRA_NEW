@@ -55,10 +55,22 @@ class EmbeddingService:
             self.embedding_dim = 768 # Default for MiniLM-L12
             
         self._initialized = False
+        self.use_api = False
         
     def initialize(self):
         """Lazy initialization of the embedding model."""
         if self._initialized:
+            return
+            
+        from app.config import settings
+        
+        # Try to use Gemini API first to save memory (Render 512MB limit)
+        if settings.gemini_api_key:
+            self.use_api = True
+            self.api_key = settings.gemini_api_key
+            self.embedding_dim = 768  # text-embedding-004 dimension
+            logger.info("✅ Using Gemini API for embeddings (Memory Optimized: 0MB RAM)")
+            self._initialized = True
             return
             
         try:
@@ -111,8 +123,43 @@ class EmbeddingService:
         texts = [t if t else " " for t in texts]
         
         try:
+            if self.use_api:
+                # Use Gemini API via httpx
+                import httpx
+                import asyncio
+                import json
+                
+                async def _get_api_embeddings():
+                    async with httpx.AsyncClient(timeout=30.0) as client:
+                        results = []
+                        for i in range(0, len(texts), batch_size):
+                            batch = texts[i:i+batch_size]
+                            for t in batch:
+                                response = await client.post(
+                                    f"https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key={self.api_key}",
+                                    json={"model": "models/text-embedding-004", "content": {"parts": [{"text": t}]}}
+                                )
+                                if response.status_code == 200:
+                                    results.append(response.json()["embedding"]["values"])
+                                else:
+                                    # Fallback vector on error
+                                    results.append([0.0] * self.embedding_dim)
+                        return results
+                
+                try:
+                    # If there's a running loop, run in current loop
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():
+                        import nest_asyncio
+                        nest_asyncio.apply()
+                    embeddings_list = loop.run_until_complete(_get_api_embeddings())
+                except RuntimeError:
+                    embeddings_list = asyncio.run(_get_api_embeddings())
+                    
+                embeddings = np.array(embeddings_list)
+                
             # Check if using BGE-M3 (check model class name instead of isinstance)
-            if BGE_M3_AVAILABLE and hasattr(self.model, 'encode') and 'BGEM3' in str(type(self.model)):
+            elif BGE_M3_AVAILABLE and hasattr(self.model, 'encode') and 'BGEM3' in str(type(self.model)):
                 # BGE-M3 encoding (MEMORY-OPTIMIZED)
                 result = self.model.encode(
                     texts,

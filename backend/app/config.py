@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     
     # Vector Database
     chroma_persist_dir: str = "./chroma_db"
-    embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"  # Changed to smaller model to prevent OOM
     
     # OpenAI
     openai_api_key: str = ""
