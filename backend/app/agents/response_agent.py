@@ -123,12 +123,21 @@ class ResponseSynthesisAgent(BaseAgent):
             
             logger.info(f"[RESPONSE_AGENT] Context length: {len(context_text)} chars")
             
-            # Minimal system prompt for Ollama (reduce token count)
-            system_prompt = f"""You are a legal assistant. Answer the user's question based on these Indian legal documents:
+            # Use the massive system prompt for rich formatting and citations
+            from app.services.llm_service import SYSTEM_PROMPT
+            
+            language_instruction = ""
+            if context.language == "hi":
+                language_instruction = "\n\nCRITICAL INSTRUCTION: You MUST write your entire response in HINDI language."
+            
+            system_prompt = f"""{SYSTEM_PROMPT}
+
+You are answering the user's question based on these Indian legal documents:
 
 {context_text}
 
-Provide a clear, concise answer (max 150 words). Reference specific sections when available."""
+Provide a detailed, comprehensive answer. Reference specific sections from the context.
+{language_instruction}"""
             
             # Build messages
             messages = [
