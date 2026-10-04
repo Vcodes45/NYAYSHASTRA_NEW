@@ -219,8 +219,18 @@ class AgentOrchestrator:
             data={"session_id": session_id, "query": query}
         )
         
+        start_time = datetime.now()
+        GLOBAL_TIMEOUT = 60  # Never spend more than 60s total
+        PER_AGENT_TIMEOUT = 15  # Max 15s per agent
+        
         # Execute agents with streaming updates
         for agent in self.agents:
+            # Check global timeout
+            elapsed = (datetime.now() - start_time).total_seconds()
+            if elapsed > GLOBAL_TIMEOUT:
+                logger.warning(f"[ORCHESTRATOR] Global timeout ({GLOBAL_TIMEOUT}s) reached after {elapsed:.1f}s. Skipping remaining agents.")
+                break
+            
             # Yield agent start
             yield ChatStreamChunk(
                 type="agent_status",
@@ -238,7 +248,11 @@ class AgentOrchestrator:
                 continue
 
             try:
-                context = await agent.execute(context)
+                # Per-agent timeout to prevent any single agent from hanging
+                context = await asyncio.wait_for(
+                    agent.execute(context),
+                    timeout=PER_AGENT_TIMEOUT
+                )
                 
                 # Yield agent completion
                 yield ChatStreamChunk(
@@ -269,6 +283,17 @@ class AgentOrchestrator:
                         data={"citations": context.citations}
                     )
                 
+            except asyncio.TimeoutError:
+                logger.error(f"[ORCHESTRATOR] Agent {agent.name} timed out after {PER_AGENT_TIMEOUT}s!")
+                yield ChatStreamChunk(
+                    type="agent_status",
+                    data={
+                        "agent": agent.agent_type.value,
+                        "status": AgentStatus.ERROR.value,
+                        "error": f"Agent timed out after {PER_AGENT_TIMEOUT}s"
+                    }
+                )
+                context.add_error(agent.name, f"Timed out after {PER_AGENT_TIMEOUT}s")
             except Exception as e:
                 yield ChatStreamChunk(
                     type="agent_status",
@@ -280,14 +305,14 @@ class AgentOrchestrator:
                 )
             
             # Small delay for visual effect
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.05)
         
-        # Yield final response
+        # Yield final response  
         yield ChatStreamChunk(
             type="response",
             data={
-                "content": context.response,
-                "content_hi": context.response_hi,
+                "content": context.response or "Sorry, I could not process your query at this time. Please try again.",
+                "content_hi": context.response_hi or "क्षमा करें, मैं इस समय आपकी क्वेरी को संसाधित नहीं कर सका। कृपया पुनः प्रयास करें।",
                 "citations": context.citations,
                 "statutes": context.statutes,
                 "case_laws": context.case_laws,

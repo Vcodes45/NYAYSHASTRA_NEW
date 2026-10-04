@@ -77,7 +77,7 @@ class LLMService:
         """Generate response for a list of chat messages."""
         if self.provider == "gemini":
             try:
-                async with httpx.AsyncClient(timeout=60.0) as client:
+                async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(
                         f"{GEMINI_API_BASE}/chat/completions",
                         headers={
@@ -93,12 +93,14 @@ class LLMService:
                     )
                     if response.status_code == 200:
                         return response.json()["choices"][0]["message"]["content"]
+                    else:
+                        logger.error(f"Gemini chat API error: {response.status_code} - {response.text[:200]}")
             except Exception as e:
                 logger.error(f"Gemini generate_chat failed: {e}")
 
         elif self.provider == "groq":
             try:
-                async with httpx.AsyncClient(timeout=60.0) as client:
+                async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(
                         f"{GROQ_API_BASE}/chat/completions",
                         headers={
@@ -119,7 +121,7 @@ class LLMService:
         
         elif self.provider == "openai":
             try:
-                async with httpx.AsyncClient(timeout=60.0) as client:
+                async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(
                         "https://api.openai.com/v1/chat/completions",
                         headers={
@@ -138,17 +140,17 @@ class LLMService:
             except Exception as e:
                 logger.error(f"OpenAI generate_chat failed: {e}")
 
-        # Fallback - use the last user message
+        # Fallback - return template response directly, DO NOT recurse into self.generate()
         user_msg = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
-        return await self.generate(user_msg, max_tokens, temperature)
+        return self._generate_fallback_response(user_msg)
     
     async def _gemini_generate(self, prompt: str, max_tokens: int, 
                              temperature: float) -> str:
         """Generate using Gemini API with retry on transient errors."""
-        max_retries = 3
+        max_retries = 2
         for attempt in range(max_retries):
             try:
-                async with httpx.AsyncClient(timeout=90.0) as client:
+                async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(
                         f"{GEMINI_API_BASE}/chat/completions",
                         headers={
@@ -171,22 +173,22 @@ class LLMService:
                             return data["choices"][0]["message"]["content"]
                         except KeyError:
                             logger.error(f"Missing 'content' in Gemini response: {data}")
-                            raise
+                            return self._generate_fallback_response(prompt)
                     elif response.status_code in (429, 503) and attempt < max_retries - 1:
-                        wait_time = 2 ** (attempt + 1)
-                        logger.warning(f"Gemini API returned {response.status_code}, retrying in {wait_time}s (attempt {attempt + 1}/{max_retries})")
+                        wait_time = 2
+                        logger.warning(f"Gemini API returned {response.status_code}, retrying in {wait_time}s")
                         await asyncio.sleep(wait_time)
                         continue
                     else:
-                        logger.error(f"Gemini API error: {response.status_code} - {response.text}")
+                        logger.error(f"Gemini API error: {response.status_code} - {response.text[:200]}")
                         return self._generate_fallback_response(prompt)
                         
             except Exception as e:
                 if attempt < max_retries - 1:
-                    logger.warning(f"Gemini generation attempt {attempt + 1} failed: {e}, retrying...")
-                    await asyncio.sleep(2 ** (attempt + 1))
+                    logger.warning(f"Gemini attempt {attempt + 1} failed: {e}, retrying...")
+                    await asyncio.sleep(2)
                 else:
-                    logger.error(f"Gemini generation failed after {max_retries} attempts: {e}")
+                    logger.error(f"Gemini failed after {max_retries} attempts: {e}")
                     return self._generate_fallback_response(prompt)
         
         return self._generate_fallback_response(prompt)
