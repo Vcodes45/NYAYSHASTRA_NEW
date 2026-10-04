@@ -36,13 +36,13 @@ class LLMService:
         if self._initialized:
             return
         
-        # Prefer Gemini, fallback to Groq, then OpenAI
-        if self.gemini_api_key:
-            self.provider = "gemini"
-            logger.info(f"Gemini LLM initialized with model: {self.gemini_model}")
-        elif self.groq_api_key:
+        # Prefer Groq for generation, fallback to Gemini, then OpenAI
+        if self.groq_api_key:
             self.provider = "groq"
             logger.info(f"Groq LLM initialized with model: {self.groq_model}")
+        elif self.gemini_api_key:
+            self.provider = "gemini"
+            logger.info(f"Gemini LLM initialized with model: {self.gemini_model}")
         elif self.openai_api_key:
             self.provider = "openai"
             logger.info(f"OpenAI LLM initialized with model: {self.openai_model}")
