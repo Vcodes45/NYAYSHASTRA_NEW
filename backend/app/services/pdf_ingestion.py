@@ -49,8 +49,11 @@ class PDFIngestionService:
         if data_dir:
             self.data_dir = Path(data_dir)
         else:
-            # Default to 'data copy' folder relative to app (where PDFs are stored)
-            self.data_dir = Path(__file__).parent.parent / "data copy"
+            # Default to 'legal_data' folder relative to app
+            self.data_dir = Path(__file__).parent.parent / "legal_data"
+            
+        # Create directory if it doesn't exist
+        os.makedirs(self.data_dir, exist_ok=True)
         
         self.chunk_size = 1000  # characters per chunk
         self.chunk_overlap = 200  # overlap between chunks
