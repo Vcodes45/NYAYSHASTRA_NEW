@@ -1,0 +1,251 @@
+IPC_Section,BNS_Section,Topic,Description,Change_Note,Penalty_Old,Penalty_New
+1,1(1),Short title & application,Short title and application of penal law,Extent of operation mentioned in IPC but absent in BNS,, 
+,1(2),Commencement,Power to appoint date of commencement,New provision – power delegated to Central Government,, 
+2,1(3),Territorial jurisdiction,Punishment of offences committed within India,Only terminology changed (Code → Sanhita),, 
+3,1(4),Extra-territorial jurisdiction,Punishment of offences committed outside India but triable in India,“Indian laws” replaced by “law”; phrase added,, 
+4,1(5),Extension of Code,Extension to extra-territorial offences,Illustration updated (Uganda → any place outside India),, 
+5,1(6),Saving clause,Certain laws not affected by this Act,Section converted into subsection,, 
+8–52A,2,Definitions,Consolidated definitions of terms used in law,All IPC definitions scattered in Ch.II are alphabetically consolidated in BNS,, 
+33,2(1),Definition – Act,Meaning of the word “act”,Separated from “omission” which was combined in IPC,, 
+47,2(2),Definition – Animal,Meaning of animal,No change,, 
+,2(3),Definition – Child,Any person below 18 years of age,New definition introduced,, 
+28,2(4),Definition – Counterfeit,Meaning of counterfeit,No change,, 
+20,2(5),Definition – Court,Meaning of Court,“Court of Justice” shortened to “Court”,, 
+46,2(6),Definition – Death,Meaning of death,No change,, 
+24,2(7),Definition – Dishonestly,Meaning of dishonesty,Redundant words removed,, 
+29 & 29A,2(8),Definition – Document,Meaning of document,Electronic & digital records added,, 
+25,2(9),Definition – Fraudulently,Meaning of fraudulently,Phraseology changed, essence same,, 
+8,2(10),Definition – Gender,Meaning of gender,Transgender added,, 
+53,4,Punishments,Types of punishments available,“Community service” newly added,, 
+54–55,5,Commutation of sentence,Power to commute sentences,Reference to BNSS added,, 
+55A,5 (Explanation),Commutation explanation,Explanation incorporated,Heading dropped,, 
+57,6,Fraction of punishment,Calculation of terms of punishment,“Unless otherwise provided” added,, 
+60,7,Type of imprisonment,Simple or rigorous imprisonment,No change,, 
+63,8(1),Fine & default,Amount of fine and default liability,Heading expanded,, 
+64,8(2),Default imprisonment,Sentence for non-payment of fine,No change,, 
+65,8(3),Limit of default imprisonment,Limit when both fine and imprisonment awarded,No change,, 
+66,8(4),Description of default imprisonment,Imprisonment for non-payment,“Or in default of community service” added,, 
+67,8(5),Fine-only offences,Imprisonment for non-payment of fine,Imprisonment & fine increased,, 
+68–69,8(6),Termination on payment,Termination of imprisonment on payment of fine,Two IPC sections merged,, 
+70,8(7),Levy of fine,Levy period & death not discharging liability,No change,, 
+107,45,Abetment,Definition of abetment,“Court of Justice” replaced by “Court”,, 
+108,46,Abettor,Who is an abettor,“Lunatic” replaced by “person of unsound mind”,, 
+108A,47,Abetment outside India,Abetment in India of offences outside India,Illustration updated (Goa → Country X),, 
+,48,Abetment outside India,Abetment outside India for offence in India,Newly framed definition in BNS,, 
+109,49,Punishment of abetment,Punishment when act abetted is committed,No change,, 
+110,50,Abetment with different intention,Punishment when act differs in intention,No change,, 
+111,51,Liability of abettor,One act abetted, different act done,No change,, 
+112,52,Cumulative liability,Liability for abetted and actual act,“Last preceding section” replaced by “section 51”,, 
+113,53,Abettor liability for effect,Effect different from intended,No change,, 
+114,54,Abettor present,Presence at commission of offence,No change,, 
+115,55,Abetment of capital offence,Abetment of offence punishable with death or life imprisonment,No change,, 
+116,56,Abetment of imprisonable offence,Abetment of offence punishable with imprisonment,Heading simplified & wording adjusted,, 
+117,57,Public abetment,Abetting offence by public or >10 persons,Imprisonment increased (3 → 7 years),3 years,7 years
+118,58,Concealment of design,Concealing design for capital offence,Words “in either case” removed,, 
+119,59,Public servant concealment,Concealing design by public servant,No change,, 
+120,60,Concealment of design (imprisonable),Concealing design of imprisonable offence,No change,, 
+120A,61(1),Criminal conspiracy,Definition of conspiracy,Section converted to subsection,, 
+120B,61(2),Criminal conspiracy punishment,Punishment for conspiracy,Section converted to subsection,, 
+511,62,Attempt offences,Punishment for attempt of life/imprisonment offence,No change,, 
+375,63,Rape,Definition of rape,Age of consent raised from 15 to 18 years,15 years,18 years
+376(1)(2),64,Punishment for rape,General punishment for rape,“Military” replaced by “Army”,, 
+376(3),65(1),Rape of minor,Rape on woman under 16 years,No change,, 
+376AB,65(2),Rape of child,Rape on woman under 12 years,Section converted to subsection,, 
+376A,66,Rape causing death or PVS,Death or persistent vegetative state,No change,, 
+376B,67,Marital rape during separation,Sexual intercourse by husband during separation,No change,, 
+376C,68,Sex by person in authority,Sexual intercourse by person in authority,No change,, 
+,69,Deceitful sexual intercourse,Sex by false promise / deception,New offence introduced,,Up to 10 years
+376D,70(1),Gang rape,Gang rape,No structural change,, 
+376DB,70(2),Gang rape of child,Gang rape on woman under 18,Age threshold raised (12 → 18),Death,Death
+376E,71,Repeat offenders,Punishment for repeat rape,No change,, 
+228A(1)(2),72,Identity protection,Disclosure of victim identity,“Minor” replaced by “Child”,, 
+228A(3),73,Publication restriction,Printing court proceedings,Subsection converted to section,, 
+354,74,Outraging modesty,Assault to outrage modesty,No change,, 
+354A,75,Sexual harassment,Sexual harassment,No change,, 
+354B,76,Disrobing,Assault to disrobe,“Any man who” replaced by “Whoever”,, 
+354C,77,Voyeurism,Voyeurism,No change,, 
+354D,78,Stalking,Stalking,No change,, 
+509,79,Insult to modesty,Word/gesture to insult modesty,No change,, 
+304B,80,Dowry death,Dowry death,No change,, 
+493,81,Deceitful cohabitation,Cohabitation by false marriage,No change,, 
+494,82(1),Bigamy,Marrying again during lifetime,Section converted to subsection,, 
+495,82(2),Concealed bigamy,Bigamy with concealment,Words removed from heading,, 
+496,83,Fraudulent marriage,Marriage ceremony fraudulently gone through,No change,, 
+498,84,Enticing married woman,Enticing/detaining married woman,Words deleted for scope change,, 
+498A,85,Domestic cruelty,Criminal cruelty by husband/relatives,No change,, 
+498A (Exp.),86,Cruelty defined,Explanation of cruelty,IPC explanation converted to section,, 
+366,87,Kidnapping for murder/ransom,Abducting in order to murder or ransom,No change,, 
+312,88,Voluntary miscarriage,Causing miscarriage,No change,, 
+313,89,Forced miscarriage,Causing miscarriage without consent,Section reference clarified,, 
+314,90,Death by miscarriage,Death caused by miscarriage attempt,Heading modified,, 
+315,91,Prevent birth alive,Act to prevent child being born alive,No change,, 
+316,92,Death of quick unborn,Death of quick unborn child,No change,, 
+317,93,Child abandonment,Exposure/abandonment of child,No change,, 
+318,94,Concealment of birth,Secret disposal of dead body,No change,, 
+,95,Child crime involvement,Hiring or using child to commit offence,New offence created,,3–10 years
+366A,96,Procuration of child,Procuration of child for immoral purpose,Gender neutral,, 
+369,97,Child kidnapping,Kidnapping child under 10,No change,, 
+372,98,Selling child,Selling child for prostitution,“Minor” → “Child”,, 
+373,99,Buying child,Buying child for prostitution,Minimum punishment enhanced,,10 yrs,14 yrs
+299,100,Culpable homicide,Culpable homicide,No change,, 
+300,101,Murder,Definition of murder,Clause formatting changed,, 
+301,102,Transferred malice,Culpable homicide of unintended person,No change,, 
+302,103(1),Punishment for murder,Murder punishment,Section converted to subsection,, 
+,103(2),Hate murder,Murder by group on identity grounds,New aggravated form,,Death/Life
+303,104,Murder by life convict,Punishment for murder by life-convict,Life imprisonment option added,Death,Death/Life (natural life)
+304,105,Culpable homicide not murder,Punishment,Minimum 5 yrs added,,Min 5 yrs + Fine
+304A,106(1),Negligent homicide,Causing death by negligence,Imprisonment increased & doctors added,, 
+,106(2),Negligent homicide (new),Causing death by negligence (special),New provision (on hold),, 
+305,107,Abetment of suicide (child/unsound),Abetment of suicide of child/unsound mind,Terminology updated,, 
+306,108,Abetment of suicide,Abetment of suicide,No change,, 
+307,109,Attempt to murder,Attempt to murder,Alternate life sentence added,Death (life-convict),Life (natural life)
+308,110,Attempt culpable homicide,Attempt to commit culpable homicide,No change,, 
+,111,Organized crime,Organized crime,New offence introduced,,Life/Long term
+,112,Petty organized crime,Petty organized crime,New offence,, 
+,113,Terrorist act,Terrorist act,New offence,, 
+319,114,Hurt,Definition of hurt,No change,, 
+321,115(1),Voluntary hurt,Voluntarily causing hurt,No change,, 
+323,115(2),Punishment for hurt,Punishment for voluntary hurt,Fine increased,,10,000
+320,116,Grievous hurt,Definition of grievous hurt,Threshold reduced (20 → 15 days),20 days,15 days
+322,117(1),Grievous hurt,Voluntarily causing grievous hurt,No change,, 
+325,117(2),Punishment grievous hurt,Punishment,Formal changes,, 
+,117(3),Grievous hurt (severe),Permanent disability/PVS caused,New aggravated offence,,Min 10 yrs–Life
+,117(4),Grievous hurt (hate),Group offence on identity grounds,New aggravated offence,,Up to 7 yrs + Fine
+324,118(1),Dangerous weapons hurt,Voluntarily causing hurt/grievous hurt by weapons,Fine increased,,20,000
+326,118(2),Dangerous weapons grievous hurt,Grievous hurt by weapons,Minimum 1 year imprisonment added,,Min 1 yr
+327,119(1),Extortion by hurt,Hurt to extort property,No change,, 
+329,119(2),Extortion by grievous hurt,Grievous hurt to extort property,Words added,, 
+330,120(1),Confession by hurt,Hurt to extort confession,No change,, 
+331,120(2),Confession by grievous hurt,Grievous hurt to extort confession,Words added,, 
+332,121(1),Hurt to deter public servant,Hurt to deter public servant,Imprisonment increased,3 yrs,5 yrs
+333,121(2),Grievous hurt to deter public servant,Grievous hurt to deter public servant,Minimum 1 yr added,,Min 1 yr
+334,122(1),Provocation hurt,Hurt on provocation,Fine increased,500,5,000
+335,122(2),Provocation grievous hurt,Grievous hurt on provocation,Imprisonment & fine increased,4 yrs/2,000,5 yrs/10,000
+328,123,Poisoning,Causing harm by poison,No change,, 
+326A,124(1),Acid attack grievous hurt,Grievous hurt by acid,“Permanent vegetative state” added,, 
+326B,124(2),Acid throwing,Throwing/attempting to throw acid,PVS added,, 
+336,125,Endangering life,Act endangering life,Fine increased,250,2,500
+337,125(a),Hurt by rash act,Hurt caused by rash act,Fine increased,500,5,000
+338,125(b),Grievous hurt by rash act,Grievous hurt caused by rash act,Imprisonment & fine increased,2 yrs/1,000,3 yrs/10,000
+339,126(1),Wrongful restraint,Wrongful restraint,Section converted,, 
+341,126(2),Punishment restraint,Punishment for restraint,Fine increased,500,5,000
+340,127(1),Wrongful confinement,Wrongful confinement,Section converted,, 
+342,127(2),Punishment confinement,Punishment confinement,Fine increased,1,000,5,000
+343,127(3),Confinement >3 days,Wrongful confinement >3 days,Imprisonment increased,2 yrs,3 yrs
+344,127(4),Confinement >10 days,Wrongful confinement >10 days,Imprisonment & fine increased,3 yrs,5 yrs + 10,000
+345,127(5),Confinement despite writ,Confinement despite writ,Fine added,,Fine
+346,127(6),Secret confinement,Secret wrongful confinement,Imprisonment increased,2 yrs,3 yrs + Fine
+347,127(7),Extortion confinement,Confinement to extort property,No change,, 
+348,127(8),Confession confinement,Confinement to extort confession,No change,, 
+349,128,Force,Use of force,Clause formatting changed,, 
+350,129,Criminal force,Criminal force,No change,, 
+351,130,Assault,Assault,No change,, 
+352,131,Simple assault punishment,Punishment for assault,Fine increased,500,1,000
+353,132,Assault public servant,Assault to deter public servant,No change,, 
+355,133,Dishonour assault,Assault to dishonour,No change,, 
+356,134,Theft attempt assault,Assault in attempt theft,No change,, 
+357,135,Confinement assault,Assault to confine,Fine increased,1,000,5,000
+358,136,Provocation assault,Assault on provocation,Fine increased,200,1,000
+359,137(1),Kidnapping,Definition of kidnapping,Section converted,, 
+360,137(1)(a),Kidnapping from India,Kidnapping from India,No change,, 
+361,137(1)(b),Kidnapping from guardianship,Kidnapping from lawful guardianship,“Minor” → “Child”,, 
+363,137(2),Punishment kidnapping,Punishment for kidnapping,Section converted,, 
+362,138,Abduction,Abduction,No change,, 
+363A,139,Begging kidnapping,Kidnapping/maiming child for begging,Life imprisonment added,,Life
+364,140(1),Kidnapping to murder,Kidnapping to murder,Section converted,, 
+364A,140(2),Kidnapping for ransom,Kidnapping for ransom,Section converted,, 
+365,140(3),Secret confinement kidnapping,Kidnapping to secretly confine,Section converted,, 
+366B,141,Importation of child,Importation of girl/boy from foreign country,Gender neutral wording,, 
+368,142,Concealment of kidnapped,Wrongfully concealing kidnapped/abducted person,No change,, 
+370,143,Trafficking of person,Human trafficking,“Minor” → “Child”,, 
+370A,144,Exploitation of trafficked,Exploitation of trafficked person,Imprisonment increased,7 yrs,10 yrs
+371,145,Dealing in slaves,Habitual dealing in slaves,No change,, 
+374,146,Unlawful compulsory labour,Forced labour,No change,, 
+121,147,Waging war,Waging war against Govt. of India,No change,, 
+121A,148,War conspiracy,Conspiracy to wage war,“And beyond” added,, 
+122,149,Collecting arms,Collecting arms to wage war,No change,, 
+123,150,Concealing war design,Concealing design to wage war,No change,, 
+124,151,Assault on President/Governor,Assault to compel lawful power,No change,, 
+,152,Sovereignty offence,Act endangering sovereignty & integrity,New offence introduced,,Life/7 yrs
+125,153,War against foreign state,Waging war against foreign government,Terminology updated,, 
+126,154,Depredation,Depredation on foreign territory,Terminology updated,, 
+127,155,Receiving war property,Receiving property taken by war,No change,, 
+128,156,Escape of State prisoner,Public servant allowing escape,No change,, 
+129,157,Negligent escape,Public servant negligently suffering escape,No change,, 
+130,158,Harbouring State prisoner,Harbouring prisoner of State,No change,, 
+131,159,Abetting mutiny,Abetment of mutiny,No change,, 
+132,160,Abetment mutiny success,Abetment where mutiny occurs,Imprisonment increased,3 yrs,10 yrs
+133,161,Abetment assault,Abetment of assault by soldier,No change,, 
+134,162,Abetment assault success,Abetment where assault occurs,No change,, 
+135,163,Abetment desertion,Abetment of desertion,No change,, 
+136,164,Harbouring deserter,Harbouring deserter,“Wife” → “Spouse”,, 
+137,165,Deserter concealment,Negligent concealment on vessel,Fine increased,500,3,000
+138,166,Insubordination,Abetment of insubordination,Imprisonment increased,6 months,2 yrs
+139,167,Persons subject to Acts,Persons subject to special Acts,No change,, 
+140,168,Army disguise,Using army garb/token,Fine increased,500,2,000
+171A,169,Election definitions,Candidate & electoral rights,No change,, 
+171B,170,Bribery,Bribery at elections,No change,, 
+171C,171,Undue influence,Undue influence at elections,No change,, 
+171D,172,Personation,Personation at elections,No change,, 
+171E,173,Punishment bribery,Penalty for bribery,No change,, 
+171F,174,Punishment undue influence,Penalty for undue influence/personation,No change,, 
+171G,175,False election statement,False statement at election,No change,, 
+171H,176,Illegal payment,Illegal election payment,Fine increased,500,10,000
+171I,177,Election accounts,Failure to keep accounts,Fine increased,500,5,000
+230–232,178,Counterfeiting currency,Counterfeiting coins & notes,Multiple IPC sections merged,, 
+237–241 etc.,179,Using forged currency,Using counterfeit currency,Multiple IPC sections merged,, 
+242–243 etc.,180,Possession forged currency,Possession of forged currency,“Not constitute offence” added,, 
+233–235 etc.,181,Instruments for forgery,Tools/material for counterfeiting,Expanded scope,, 
+489E,182,Resembling notes,Documents resembling currency,Fine increased,100–200,300–600
+261,183,Stamp offence,Stamp effacement,No change,, 
+262,184,Reuse of stamp,Using used government stamp,No change,, 
+263,185,Stamp erasure,Erasing used stamp mark,No change,, 
+263A,186,Fictitious stamps,Prohibition of fictitious stamps,Colonial phrase removed,, 
+244,187,Mint offence,Altering coin weight,No change,, 
+245,188,Coing instrument theft,Unlawful taking of mint instrument,No change,, 
+141–151,189,Unlawful assembly,Unlawful assembly offences,Clauses reformatted,, 
+149,190,Common object liability,Member liability in assembly,No change,, 
+146,191,Rioting,Rioting & punishment,Imprisonment increased,3 yrs,5 yrs
+153,192,Riot provocation,Provocation to riot,No change,, 
+154–156,193,Riot liability,Owner/beneficiary liability,Heading expanded,, 
+159–160,194,Affray,Affray & punishment,Fine increased,100,1,000
+152,195,Public servant & riot,Obstructing public servant during riot,Fine minimum added,,25,000
+153A,196,Promoting enmity,Promoting enmity,Electronic mode added,, 
+153B,197,National integration,Acts against integration,Electronic mode added,, 
+,197(1)(d),Fake info offence,False info harming sovereignty,New offence,, 
+166,198,Disobedience law,Public servant disobeying law,No change,, 
+166A,199,Disobeying direction,Public servant disobeying direction,No change,, 
+166B,200,Non-treatment victim,Failure to treat victim,No change,, 
+167,201,Incorrect document,Public servant framing wrong document,No change,, 
+168,202,Illegal trade,Public servant illegal trade,Community service added,, 
+169,203,Property bidding,Public servant unlawful purchase,No change,, 
+170,204,Personating public servant,Personating public servant,Minimum imprisonment added,,Min 6 months
+172–174,206–209,Summons offences,Absconding / non-attendance,Fine increased,, 
+175–176,210–211,Information offences,Omission to give info,Fine increased,, 
+177–182,212–217,False information,False statements & oath,Fine & jail increased,, 
+183–187,218–222,Obstruction authority,Obstruction of public servant,Fine increased,, 
+188,223,Disobedience order,Disobedience to public order,Imprisonment increased,, 
+189–190,224–225,Threat to public servant,Threats & coercion,No change,, 
+,226,Suicide to coerce,Attempt suicide to compel official,New offence,,Up to 1 yr / Fine / CS
+191–195A,227–233,False evidence,Perjury & fabrication,Fine defined,, 
+196–200,234–237,False certificates,False documents,“Court of Justice” → “Court”,, 
+201–204,238–241,Disappearance evidence,Screening offender,Punishment increased,, 
+205–210,242–247,Fraudulent claims,False claims in court,Imprisonment & fine increased,, 
+211,248,False charge,False charge with intent,Imprisonment increased,2 yrs,5–10 yrs
+212–216A,249–254,Harbouring offenders,Harbouring & screening,“Spouse” substituted,, 
+217–225B,255–265,Public servant offences,Escape, omission, resistance,Reformatted,, 
+227,266,Violation remission,Violation of remission condition,No change,, 
+228,267,Judicial insult,Insult/interruption in court,Fine increased,1,000,5,000
+229,268,Assessor personation,Personation of assessor,Juryman removed,, 
+229A,269,Bail default,Failure to appear on bail,No change,, 
+268,270,Public nuisance,Public nuisance,Paragraphs merged,, 
+269,271,Negligent infection,Negligent spread disease,No change,, 
+270,272,Malignant infection,Malignant spread disease,No change,, 
+271,273,Quarantine breach,Disobedience quarantine,Transport wording changed,, 
+272,274,Food adulteration,Adulteration food,Fine increased,1,000,5,000
+273,275,Noxious food,Sale noxious food,Fine increased,1,000,5,000
+274,276,Drug adulteration,Adulteration drugs,Imprisonment increased,6 months,1 yr
+275,277,Sale adulterated drugs,Sale adulterated drugs,Fine increased,1,000,5,000
+276,278,Wrong drug sale,Sale of wrong drug,Fine increased,1,000,5,000
+277,279,Water pollution,Fouling public water,Imprisonment & fine increased,3 months,6 months + 5,000
+278,280,Noxious atmosphere,Polluting air,Fine increased,500,1,000
