@@ -6,7 +6,9 @@ import { Input } from './ui/input';
 import { useEffect, useState } from 'react';
 import { warmUpDatabase, getDashboardStats } from '@/services/api';
 import { useChatHistory } from '@/hooks/useApi';
-
+import { Experience3D } from './3d/core/Experience3D';
+import { SketchfabScrollExperience } from './3d/core/SketchfabScrollExperience';
+import { MODEL_REGISTRY } from './3d/config/ModelRegistry';
 interface AuthenticatedDashboardProps {
   language: 'en' | 'hi';
   onStartChat: (message?: string) => void;
@@ -76,8 +78,13 @@ export const AuthenticatedDashboard = ({ language, onStartChat, onLoadSession }:
   const displayChats = recentChats.slice(0, 6);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#faf7f2] dark:bg-[#0f1115]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+    <div className="flex-1 overflow-y-auto bg-[#faf7f2] dark:bg-[#0f1115] relative">
+      {/* 3D Lady Justice Hero Background */}
+      <div className="absolute right-0 top-0 w-full md:w-1/2 h-[600px] pointer-events-none opacity-40 md:opacity-100 z-0">
+        <Experience3D config={MODEL_REGISTRY.ladyJustice} className="w-full h-full pointer-events-auto" />
+      </div>
+
+      <div className="container mx-auto px-4 py-12 max-w-6xl relative z-10">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <motion.div
@@ -307,6 +314,9 @@ export const AuthenticatedDashboard = ({ language, onStartChat, onLoadSession }:
           </div>
         </motion.div>
       </div>
+
+      {/* Courtroom Immersive Scroll Experience at the bottom */}
+      <SketchfabScrollExperience />
     </div>
   );
 };
