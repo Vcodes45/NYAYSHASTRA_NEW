@@ -488,6 +488,11 @@ export async function getChatHistory(
     },
   );
 
+  if (response.status === 401) {
+    // Auth not configured on backend — return empty rather than throwing
+    return { sessions: [] };
+  }
+
   if (!response.ok) {
     throw new Error(`API error: ${response.statusText}`);
   }

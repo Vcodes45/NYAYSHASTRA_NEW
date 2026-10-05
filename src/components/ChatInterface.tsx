@@ -240,8 +240,9 @@ export const ChatInterface = ({
       const formData = new FormData();
       formData.append("file", file);
 
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
       const response = await fetch(
-        "http://localhost:8000/api/documents/upload",
+        `${apiUrl}/api/documents/upload`,
         {
           method: "POST",
           body: formData,
@@ -298,7 +299,8 @@ export const ChatInterface = ({
     
     const poll = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/documents/status/${docId}`);
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        const response = await fetch(`${apiUrl}/api/documents/status/${docId}`);
         if (!response.ok) {
           throw new Error("Failed to get status");
         }

@@ -64,7 +64,8 @@ const Index = () => {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const response = await fetch("http://localhost:8000/health");
+        const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        const response = await fetch(`${baseUrl}/health`);
         if (response.ok) {
           setUseBackendAPI(true);
           console.log("✅ Backend connected");
@@ -202,8 +203,6 @@ const Index = () => {
 
   // Map API messages to component format
   const formattedMessages = messages.map((msg) => {
-    console.log("Message full object:", msg); // Debug logging
-    console.log("Message citations:", msg.citations); // Debug logging
     return {
       id: msg.id,
       role: msg.role,

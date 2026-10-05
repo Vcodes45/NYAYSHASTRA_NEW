@@ -133,10 +133,7 @@ export function useChat(options: UseChatOptions = {}) {
 
               case "response":
                 // Transform raw backend response to camelCase
-                console.log("Raw response data:", chunk.data);
-                console.log("Raw citations:", chunk.data.citations);
                 response = transformStreamingResponse(chunk.data);
-                console.log("Transformed citations:", response.citations);
                 detectedLang = chunk.data.detected_language || "en";
                 break;
 
@@ -176,8 +173,6 @@ export function useChat(options: UseChatOptions = {}) {
             domain,
           );
 
-          console.log("Non-streaming API response:", response);
-          console.log("Non-streaming citations:", response.citations);
 
           setSessionId(response.sessionId);
           setCurrentStatutes(response.statutes);
