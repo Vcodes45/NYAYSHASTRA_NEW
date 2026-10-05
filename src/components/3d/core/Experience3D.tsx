@@ -53,6 +53,16 @@ export function Experience3D({ config, className = '', scrollProgress = 0 }: Exp
                   fov: config.initialCamera.fov || 45 
                 }}
                 className="w-full h-full outline-none"
+                onCreated={({ gl }) => {
+                  const canvas = gl.domElement;
+                  canvas.addEventListener('webglcontextlost', (e) => {
+                    e.preventDefault();
+                    console.warn('WebGL context lost — will restore when available');
+                  });
+                  canvas.addEventListener('webglcontextrestored', () => {
+                    console.info('WebGL context restored');
+                  });
+                }}
               >
                 <LightingController profile={config.lightingProfile} />
                 

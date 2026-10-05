@@ -85,7 +85,8 @@ export const DocumentUpload = ({ language, onDocumentProcessed }: DocumentUpload
       const formData = new FormData();
       formData.append('file', file);
       
-      const response = await fetch('http://localhost:8000/api/documents/upload', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/api/documents/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -107,7 +108,8 @@ export const DocumentUpload = ({ language, onDocumentProcessed }: DocumentUpload
       // Poll for status
       const pollStatus = async () => {
         try {
-          const statusResponse = await fetch(`http://localhost:8000/api/documents/status/${serverDocId}`);
+          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+          const statusResponse = await fetch(`${apiUrl}/api/documents/status/${serverDocId}`);
           if (!statusResponse.ok) {
             throw new Error('Status check failed');
           }

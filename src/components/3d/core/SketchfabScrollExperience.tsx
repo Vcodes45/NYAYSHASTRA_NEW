@@ -26,40 +26,60 @@ export function SketchfabScrollExperience() {
 
   // Load Sketchfab API
   useEffect(() => {
+    // Check if script is already loaded (e.g. HMR re-mount)
+    const existingScript = document.querySelector('script[src*="sketchfab-viewer"]');
+    
+    const initSketchfab = () => {
+      if (!iframeRef.current || !window.Sketchfab) return;
+      
+      try {
+        const client = new window.Sketchfab('1.12.1', iframeRef.current);
+        
+        client.init('b6d2b91c652148479400923a2cabb2d1', {
+          success: (api: any) => {
+            sketchfabApiRef.current = api;
+            api.start();
+            api.addEventListener('viewerready', () => {
+              setApiReady(true);
+            });
+          },
+          error: () => {
+            console.warn('Sketchfab viewer failed to initialize');
+          },
+          autostart: 1,
+          ui_controls: 0,
+          ui_infos: 0,
+          ui_watermark: 0,
+          ui_inspector: 0,
+          scrollwheel: 1
+        });
+      } catch (err) {
+        console.warn('Sketchfab init error:', err);
+      }
+    };
+
+    if (existingScript && window.Sketchfab) {
+      // Script already loaded from a previous mount
+      initSketchfab();
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js';
     script.async = true;
     
-    script.onload = () => {
-      if (!iframeRef.current || !window.Sketchfab) return;
-      
-      const client = new window.Sketchfab(1.12, iframeRef.current);
-      
-      client.init('b6d2b91c652148479400923a2cabb2d1', {
-        success: (api: any) => {
-          sketchfabApiRef.current = api;
-          api.start();
-          api.addEventListener('viewerready', () => {
-            setApiReady(true);
-            // Hide some extra UI if possible through API
-          });
-        },
-        error: () => {
-          console.error('Sketchfab API error');
-        },
-        autostart: 1,
-        ui_controls: 0,
-        ui_infos: 0,
-        ui_watermark: 0,
-        ui_inspector: 0,
-        scrollwheel: 0 // Prevent scroll zooming so page can scroll normally
-      });
+    script.onload = initSketchfab;
+    script.onerror = () => {
+      console.warn('Failed to load Sketchfab viewer script');
     };
     
     document.body.appendChild(script);
     
     return () => {
-      document.body.removeChild(script);
+      // Only remove if the script is still in the DOM
+      if (script.parentNode) {
+        script.parentNode.removeChild(script);
+      }
     };
   }, []);
 
@@ -109,7 +129,6 @@ export function SketchfabScrollExperience() {
             ref={iframeRef}
             title="Court_Room" 
             frameBorder="0" 
-            allowFullScreen 
             allow="autoplay; fullscreen; xr-spatial-tracking" 
             className="w-full h-full"
           />
