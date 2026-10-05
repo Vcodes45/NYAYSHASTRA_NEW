@@ -52,7 +52,7 @@ export function SketchfabScrollExperience() {
         ui_infos: 0,
         ui_watermark: 0,
         ui_inspector: 0,
-        scrollwheel: 0 // Prevent scroll zooming so page can scroll normally
+        scrollwheel: 1 // Enable trackpad/mouse wheel zooming
       });
     };
     

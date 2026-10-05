@@ -31,6 +31,8 @@ import { Textarea } from "./ui/textarea";
 import AgentOrchestration3D from "./AgentOrchestration3D";
 import { useChatHistory } from "@/hooks/useApi";
 import { ConsultLawyerButton } from "./ConsultLawyerButton";
+import { Experience3D } from "./3d/core/Experience3D";
+import { MODEL_REGISTRY } from "./3d/config/ModelRegistry";
 
 // Domain options for regulatory filtering - matches data folder structure
 const LEGAL_DOMAINS = [
@@ -704,7 +706,7 @@ export const ChatInterface = ({
       </AnimatePresence>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* Toggle History Button - Enhanced for Visibility */}
         <AnimatePresence>
           {!showHistory && (
@@ -815,7 +817,7 @@ export const ChatInterface = ({
         )}
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-6">
+        <div className="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-6 relative z-10">
           {messages.length === 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}

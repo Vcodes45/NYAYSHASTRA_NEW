@@ -64,14 +64,14 @@ export const MODEL_REGISTRY: Record<string, ModelConfig> = {
     source: '/models/india.glb', // The Indian flag model
     purpose: 'hero',
     role: 'Symbol of Indian Law',
-    lightingProfile: 'NEUTRAL',
+    lightingProfile: 'EDITORIAL',
     interactionMode: 'orbit',
     initialCamera: {
-      position: [0, 0, 4],
+      position: [0, 0, 6],
       target: [0, 0, 0],
       fov: 45
     },
     autoRotate: true,
-    scale: [1.5, 1.5, 1.5]
+    scale: [0.4, 0.4, 0.4]
   }
 };
