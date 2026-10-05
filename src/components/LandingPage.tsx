@@ -18,6 +18,9 @@ import {
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
+import { Experience3D } from './3d/core/Experience3D';
+import { SketchfabScrollExperience } from './3d/core/SketchfabScrollExperience';
+import { MODEL_REGISTRY } from './3d/config/ModelRegistry';
 
 interface LandingPageProps {
     language: 'en' | 'hi';
@@ -232,8 +235,13 @@ export const LandingPage = ({ language: initialLanguage, onStartChat, onLanguage
 
             {/* Hero Section */}
             <section className="relative py-24 md:py-32 px-4 overflow-hidden hero-pattern">
+                {/* 3D Lady Justice Hero Background */}
+                <div className="absolute right-0 top-0 w-full md:w-1/2 h-full pointer-events-none opacity-30 md:opacity-90 z-0">
+                    <Experience3D config={MODEL_REGISTRY.ladyJustice} className="w-full h-full pointer-events-auto" />
+                </div>
+
                 {/* Background Emblem */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-[0.03] pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-[0.03] pointer-events-none z-0">
                     <img 
                         src="/national-emblem.png" 
                         alt="" 
@@ -364,8 +372,8 @@ export const LandingPage = ({ language: initialLanguage, onStartChat, onLanguage
             </div>
 
             {/* Features Section */}
-            <section className="py-20 md:py-24 px-4">
-                <div className="container mx-auto max-w-6xl">
+            <section className="py-20 md:py-24 px-4 relative overflow-hidden">
+                <div className="container mx-auto max-w-6xl relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -510,6 +518,9 @@ export const LandingPage = ({ language: initialLanguage, onStartChat, onLanguage
                     </div>
                 </div>
             </section>
+
+            {/* Courtroom Immersive Scroll Experience */}
+            <SketchfabScrollExperience />
 
             {/* Footer */}
             <footer className="py-10 px-4 border-t border-border bg-card/50">
