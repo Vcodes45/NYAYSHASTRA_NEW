@@ -101,8 +101,6 @@ class AgentOrchestrator:
         
         if not self.services_initialized:
             # If still warming up in background thread, tell the user gracefully
-            import uuid
-            from datetime import datetime
             warmup_msg = "⚠️ **NyayGuru AI Pro is currently warming up.**\n\nBecause this is a free-tier deployment, the heavy AI Language Models take a minute or two to load into memory. Please wait about 60 seconds and try your query again!"
             warmup_msg_hi = "⚠️ **न्यायगुरु एआई प्रो अभी शुरू हो रहा है।**\n\nचूंकि यह एक मुफ्त डिप्लॉयमेंट है, भारी एआई भाषा मॉडल को मेमोरी में लोड होने में एक या दो मिनट लगते हैं। कृपया लगभग 60 सेकंड प्रतीक्षा करें और फिर से प्रयास करें!"
             return {
@@ -170,7 +168,6 @@ class AgentOrchestrator:
         """Process query with streaming updates for real-time UI."""
         
         if not self.services_initialized:
-            import uuid
             yield ChatStreamChunk(
                 type="agent_start",
                 data={"agent": "System"}
@@ -220,8 +217,9 @@ class AgentOrchestrator:
         )
         
         start_time = datetime.now()
-        GLOBAL_TIMEOUT = 60  # Never spend more than 60s total
-        PER_AGENT_TIMEOUT = 15  # Max 15s per agent
+        from app.config import settings
+        GLOBAL_TIMEOUT = 60 + settings.ollama_timeout  # retrieval budget + local SLM budget
+        PER_AGENT_TIMEOUT = 30  # retrieval agents (first call may load embedding/reranker models)
         
         # Execute agents with streaming updates
         for agent in self.agents:
@@ -249,10 +247,8 @@ class AgentOrchestrator:
 
             try:
                 # Per-agent timeout to prevent any single agent from hanging
-                context = await asyncio.wait_for(
-                    agent.execute(context),
-                    timeout=PER_AGENT_TIMEOUT
-                )
+                timeout = settings.ollama_timeout + 10 if agent.agent_type == AgentType.RESPONSE else PER_AGENT_TIMEOUT
+                context = await asyncio.wait_for(agent.execute(context), timeout=timeout)
                 
                 # Yield agent completion
                 yield ChatStreamChunk(
@@ -316,7 +312,8 @@ class AgentOrchestrator:
                 "citations": context.citations,
                 "statutes": context.statutes,
                 "case_laws": context.case_laws,
-                "ipc_bns_mappings": context.ipc_bns_mappings
+                "ipc_bns_mappings": context.ipc_bns_mappings,
+                **self._grounding_fields(context)
             }
         )
         
@@ -344,8 +341,25 @@ class AgentOrchestrator:
             "citations": context.citations,
             "agent_pipeline": [step.model_dump() for step in context.agent_steps],
             "errors": context.errors,
+            **self._grounding_fields(context),
             "execution_time_seconds": execution_time,
             "timestamp": datetime.now().isoformat()
+        }
+    
+    @staticmethod
+    def _grounding_fields(context: AgentContext) -> Dict[str, Any]:
+        """Additive, backward-compatible RAG/grounding fields for the API response."""
+        g = context.grounding or {}
+        return {
+            "answer": context.response,
+            "sources": g.get("sources", []),
+            "domain": context.detected_domain,
+            "confidence": g.get("confidence", "low"),
+            "grounded": g.get("grounded", False),
+            "model": g.get("model"),
+            "retrieved_documents": len(context.evidence),
+            "grounding": {k: v for k, v in g.items() if k != "sources"},
+            "retrieval": context.retrieval_diagnostics,
         }
     
     def get_agent_info(self) -> List[Dict[str, Any]]:

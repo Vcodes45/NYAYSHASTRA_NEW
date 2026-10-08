@@ -22,7 +22,7 @@ langchain-groq>=0.1.0
 langchain-experimental>=0.0.50  # For semantic chunking
 
 # Local RAG Pipeline - BGE Models (State-of-the-Art)
-FlagEmbedding>=1.2.0  # BGE-M3 embeddings + BGE-Reranker-v2-m3
+# FlagEmbedding removed: incompatible with transformers>=5; BGE-M3 + bge-reranker run via sentence-transformers
 rank-bm25>=0.2.2  # BM25 for keyword search
 
 # AI/LLM

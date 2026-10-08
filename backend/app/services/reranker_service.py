@@ -11,11 +11,11 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 try:
-    from FlagEmbedding import FlagReranker
+    from sentence_transformers import CrossEncoder  # FlagEmbedding is incompatible with transformers>=5
     RERANKER_AVAILABLE = True
 except ImportError:
     RERANKER_AVAILABLE = False
-    logger.warning("BGE-Reranker not available. Install with: pip install FlagEmbedding")
+    logger.warning("Reranker not available. Install with: pip install sentence-transformers")
 
 
 class RerankerService:
@@ -52,10 +52,9 @@ class RerankerService:
         
         try:
             logger.info(f"Loading BGE-Reranker model: {self.model_name}")
-            self.model = FlagReranker(
-                self.model_name,
-                use_fp16=self.use_fp16
-            )
+            import torch
+            device = "mps" if torch.backends.mps.is_available() else "cpu"
+            self.model = CrossEncoder(self.model_name, device=device, max_length=384)
             logger.info("✅ BGE-Reranker model loaded successfully")
             logger.info(f"   - Model: Cross-Encoder (judges query-document pairs)")
             logger.info(f"   - Purpose: Eliminate hallucination sources")
@@ -65,6 +64,13 @@ class RerankerService:
             logger.error(f"Failed to initialize reranker: {e}")
             logger.warning("Continuing without reranking...")
             self._initialized = True
+    
+    def _score(self, pairs: List[List[str]]) -> List[float]:
+        """Sigmoid-normalised relevance in [0, 1] (same scale as FlagReranker normalize=True)."""
+        import torch
+        scores = self.model.predict(pairs, batch_size=16, activation_fn=torch.nn.Sigmoid(),
+                                    show_progress_bar=False)
+        return [float(x) for x in scores]
     
     def rerank(
         self,
@@ -108,7 +114,7 @@ class RerankerService:
             pairs = [[query, doc_text] for doc_text in doc_texts]
             
             # Get relevance scores from the reranker
-            scores = self.model.compute_score(pairs, normalize=True)
+            scores = self._score(pairs)
             
             # Handle single score (if only one document)
             if isinstance(scores, float):
@@ -165,7 +171,7 @@ class RerankerService:
         
         try:
             pairs = [[query, doc] for doc in documents]
-            scores = self.model.compute_score(pairs, normalize=True)
+            scores = self._score(pairs)
             
             if isinstance(scores, float):
                 scores = [scores]
@@ -189,7 +195,8 @@ def get_reranker_service() -> RerankerService:
     """Get or create the singleton reranker service."""
     global _reranker_service
     if _reranker_service is None:
-        _reranker_service = RerankerService()
+        from app.config import settings
+        _reranker_service = RerankerService(model_name=settings.reranker_model)
         _reranker_service.initialize()
     return _reranker_service
 

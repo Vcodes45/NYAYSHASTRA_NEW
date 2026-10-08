@@ -90,6 +90,9 @@ class RegulatoryFilterAgent(BaseAgent):
         """Filter statutes by domain relevance."""
         if not statutes:
             return []
+        # RAG evidence is already reranked; keep its order
+        if any("rrf_score" in st for st in statutes):
+            return statutes
         
         # Score and sort by relevance to domain
         for statute in statutes:

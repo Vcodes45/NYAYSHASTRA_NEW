@@ -29,6 +29,7 @@ class AgentContext:
         # Detected information
         self.detected_language: Optional[str] = None
         self.detected_domain: Optional[str] = None
+        self.domain_confidence: float = 0.0
         self.reformulated_query: Optional[str] = None
         self.keywords: List[str] = []
         self.entities: List[Dict[str, Any]] = []
@@ -38,6 +39,11 @@ class AgentContext:
         self.rejection_message: Optional[str] = None
         
         # Retrieved data
+        self.evidence: List[Dict[str, Any]] = []  # reranked RAG chunks (source of truth for the SLM)
+        self.retrieval_diagnostics: Dict[str, Any] = {}
+        self.kb_empty: bool = False
+        self.missing_sections: List[Any] = []  # explicit (act, section) refs absent from an indexed act
+        self.grounding: Dict[str, Any] = {}
         self.statutes: List[Dict[str, Any]] = []
         self.case_laws: List[Dict[str, Any]] = []
         self.citations: List[Dict[str, Any]] = []

@@ -48,7 +48,8 @@ class CaseLawAgent(BaseAgent):
         if context.statutes:
             for statute in context.statutes[:3]:  # Top 3 statutes
                 section = statute.get("section_number")
-                if section:
+                # Case DB is keyed by IPC section numbers; never match e.g. BNS 103 to IPC 103
+                if section and statute.get("act_code") == "IPC":
                     related_cases = await self.case_service.get_cases_by_section(
                         section_number=section,
                         limit=2
@@ -71,18 +72,7 @@ class CaseLawAgent(BaseAgent):
             case_laws.extend(domain_cases)
             logger.info(f"Found {len(domain_cases)} cases for domain {search_domain}")
         
-        # 3. Get landmark cases if relevant
-        domain = search_domain or "criminal"
-        landmark_cases = await self.case_service.get_landmark_cases(
-            domain=domain,
-            limit=3
-        )
-        
-        # Add landmark cases that aren't already in list
-        existing_ids = {c.get("id") for c in case_laws}
-        for case in landmark_cases:
-            if case.get("id") not in existing_ids:
-                case_laws.append(case)
+        # Landmark cases are no longer appended unconditionally: unrelated authorities mislead users.
         
         # 4. Semantic search if vector store available - with domain filter
         if self.vector_store:

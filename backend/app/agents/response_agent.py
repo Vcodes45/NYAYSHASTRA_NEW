@@ -58,110 +58,109 @@ class ResponseSynthesisAgent(BaseAgent):
             context.response_hi = response.get("hi", "")
             return context
         
-        # ALWAYS try LLM response first - template only as last resort
+        from app.services.grounding import INSUFFICIENT_EVIDENCE_MSG
+        
+        # Fail fast: never call the SLM without retrieved authority
+        if context.kb_empty:
+            msg = ("⚠️ The legal knowledge base is not loaded (0 indexed documents), so I cannot "
+                   "answer from authoritative sources. Please ingest statutes and try again.")
+            context.response = context.response_hi = msg
+            context.grounding = {"grounded": False, "confidence": "low", "model": None,
+                                 "reason": "empty_knowledge_base"}
+            return context
+        explicit = [e for e in context.entities if e["type"] == "section" and e.get("act")]
+        if context.missing_sections and len(context.missing_sections) == len(explicit):
+            refs = ", ".join(f"Section {n} of the {a}" for a, n in context.missing_sections)
+            msg = (f"{refs} does not exist in the indexed official text, so I cannot answer about it. "
+                   f"Please check the section number (the question may refer to a different Act, "
+                   f"e.g. an IPC section number used with the BNS).")
+            context.response = context.response_hi = msg + DISCLAIMER_EN
+            context.grounding = {"grounded": True, "confidence": "high", "model": None, "refusal": True,
+                                 "reason": "section_not_found", "missing_sections": context.missing_sections}
+            logger.info(f"[RESPONSE] explicit section(s) not found: {context.missing_sections}")
+            return context
+        if not context.evidence:
+            context.response = context.response_hi = INSUFFICIENT_EVIDENCE_MSG + DISCLAIMER_EN
+            context.grounding = {"grounded": True, "confidence": "low", "model": None,
+                                 "reason": "no_relevant_evidence"}
+            logger.info("[RESPONSE] No evidence above relevance threshold - controlled refusal, SLM not called")
+            return context
+        
         response = None
-        if self.llm_service and self.llm_service._initialized:
-            try:
-                response = await self._generate_llm_response(context)
-                logger.info("✅ LLM response generated successfully")
-            except Exception as e:
-                logger.error(f"LLM response generation failed: {e}")
-                response = None
+        try:
+            response = await self._generate_llm_response(context)
+        except Exception as e:
+            logger.error(f"[RESPONSE] SLM generation failed: {e}")
         
-        # Fallback to template only if LLM completely fails
+        # Fallback: show retrieved statutory text verbatim (no generated legal claims)
         if not response or not response.get("primary"):
-            logger.warning("Using template response as LLM generation failed")
+            logger.warning("[RESPONSE] Using retrieval-only template response")
             response = self._generate_template_response(context)
+            context.grounding = {"grounded": True, "confidence": "low", "model": None,
+                                 "reason": "slm_unavailable", "sources": self._source_refs(context)}
         
-        # Use primary response (in detected language) as the main content
         context.response = response.get("primary", response.get("en", ""))
         context.response_hi = response.get("hi", "")
-        
-        logger.info(f"Response synthesis completed in language: {response.get('detected_language', 'en')}")
-        
         return context
     
+    @staticmethod
+    def _source_refs(context: AgentContext) -> List[Dict[str, Any]]:
+        return [{"id": s["id"], "act_code": s["act_code"], "section": s["section_number"],
+                 "title": s["title_en"], "url": s.get("source_url")} for s in context.statutes]
+    
     async def _generate_llm_response(self, context: AgentContext) -> Dict[str, str]:
-        """Generate response using LLM - simplified with minimal prompt."""
-        try:
-            logger.info(f"[RESPONSE_AGENT] Starting LLM response generation")
-            logger.info(f"[RESPONSE_AGENT] Query: {context.query[:80]}...")
-            logger.info(f"[RESPONSE_AGENT] Statutes count: {len(context.statutes)}")
-            logger.info(f"[RESPONSE_AGENT] Domain: {context.detected_domain}")
-            
-            # Use LLM to filter and rank documents by relevance
-            from app.services.llm_router import LLMRouter
-            
-            if not hasattr(self, 'llm_router') and context.statutes:
-                self.llm_router = LLMRouter(self.llm_service)
-            
-            # Let LLM select most relevant documents
-            relevant_docs = context.statutes
-            if hasattr(self, 'llm_router') and len(context.statutes) > 3:
-                try:
-                    relevant_docs = await self.llm_router.evaluate_documents(
-                        context.query, 
-                        context.statutes, 
-                        context.detected_domain,
-                        top_k=3
-                    )
-                    logger.info(f"[RESPONSE_AGENT] LLM selected {len(relevant_docs)} most relevant docs")
-                except Exception as e:
-                    logger.warning(f"[RESPONSE_AGENT] LLM document filtering failed: {e}")
-                    relevant_docs = context.statutes[:3]
-            else:
-                relevant_docs = context.statutes[:3]
-            
-            # Build minimal context from LLM-selected documents
-            context_parts = []
-            for i, s in enumerate(relevant_docs, 1):
-                content = s.get("content_en", s.get("content", ""))[:800]  # Max 800 chars each
-                filename = s.get("filename", "statute")
-                context_parts.append(f"[{i}] {filename}: {content}")
-            
-            context_text = "\n\n".join(context_parts) if context_parts else "No specific legal documents available."
-            
-            logger.info(f"[RESPONSE_AGENT] Context length: {len(context_text)} chars")
-            
-            # Use the massive system prompt for rich formatting and citations
-            from app.services.llm_service import SYSTEM_PROMPT
-            
-            language_instruction = ""
-            if context.language == "hi":
-                language_instruction = "\n\nCRITICAL INSTRUCTION: You MUST write your entire response in HINDI language."
-            
-            system_prompt = f"""{SYSTEM_PROMPT}
-
-You are answering the user's question based on these Indian legal documents:
-
-{context_text}
-
-Provide a detailed, comprehensive answer. Reference specific sections from the context.
-{language_instruction}"""
-            
-            # Build messages
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": context.query}
-            ]
-            
-            logger.info(f"[RESPONSE_AGENT] System prompt: {len(system_prompt)} chars")
-            logger.info(f"[RESPONSE_AGENT] Calling Ollama...")
-            
-            # Call Ollama with shorter response length
-            primary_response = await self.llm_service.generate_chat(messages)
-            
-            logger.info(f"[RESPONSE_AGENT] ✅ Got response ({len(primary_response)} chars)")
-            
-            return {
-                "en": primary_response,
-                "hi": primary_response,  # Skip translation for now
-                "primary": primary_response,
-                "detected_language": context.detected_language or "en"
-            }
-        except Exception as e:
-            logger.error(f"LLM response generation failed: {e}")
-            return self._generate_template_response(context)
+        """Grounded generation: compressed evidence -> local SLM -> citation verification."""
+        import time
+        from app.config import settings
+        from app.services import grounding
+        
+        if not self.llm_service:
+            raise RuntimeError("LLM service not initialised")
+        await self.llm_service.initialize()
+        
+        context_text, sources = grounding.build_context(context.query, context.evidence)
+        messages = grounding.build_messages(context.query, context_text, context.language)
+        context_tokens = grounding.estimate_tokens(context_text)
+        logger.info(f"[CONTEXT] blocks={len(sources)} ~tokens={context_tokens} "
+                    f"sources={[s['label'] for s in sources]}")
+        
+        t0 = time.perf_counter()
+        answer = await self.llm_service.generate_chat(
+            messages, max_tokens=settings.llm_max_output_tokens, temperature=settings.llm_temperature
+        )
+        slm_ms = round((time.perf_counter() - t0) * 1000, 1)
+        
+        answer = grounding.dedupe_sentences(answer)
+        verification = grounding.verify_citations(answer, sources)
+        logger.info(f"[CITATION] {verification}")
+        
+        if verification["unverified_references"] and not verification["refusal"]:
+            # A section, penalty, term or source the evidence does not support: never surface it.
+            # Show the verbatim law instead of a partially wrong summary.
+            logger.warning(f"[CITATION] withholding summary; unverified={verification['unverified_references']}")
+            answer = grounding.extractive_answer(sources)
+            verification.update(suppressed_answer=True, grounded=True)
+            confidence = "low"
+            final = answer + grounding.format_sources_footer(sources, []) + DISCLAIMER_EN
+        else:
+            confidence = grounding.confidence_level(verification, sources)
+            excerpt = "" if verification["refusal"] else grounding.statutory_excerpt(sources[0])
+            final = (answer + excerpt + grounding.format_sources_footer(sources, verification["cited_sources"])
+                     + DISCLAIMER_EN)
+        
+        context.grounding = {
+            **verification,
+            "confidence": confidence,
+            "model": self.llm_service.model_name,
+            "provider": self.llm_service.provider,
+            "context_tokens_est": context_tokens,
+            "usage": self.llm_service.last_usage,
+            "slm_ms": slm_ms,
+            "sources": [{k: v for k, v in src.items() if k != "text"} for src in sources],
+        }
+        logger.info(f"[RESPONSE] grounded={verification['grounded']} confidence={confidence} slm_ms={slm_ms}")
+        return {"en": final, "hi": final, "primary": final,
+                "detected_language": context.detected_language or "en"}
     
     def _build_llm_context(self, context: AgentContext) -> str:
         """Build context string for LLM."""

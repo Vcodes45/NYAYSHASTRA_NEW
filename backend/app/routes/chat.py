@@ -117,7 +117,10 @@ async def process_chat_message(
             "detected_domain": result.get("detected_domain"),
             "detected_language": result.get("detected_language"),
             "execution_time_seconds": result.get("execution_time_seconds"),
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            # Additive grounding fields (backward compatible)
+            **{k: result.get(k) for k in ("answer", "sources", "domain", "confidence", "grounded",
+                                          "model", "retrieved_documents", "grounding", "retrieval")}
         }
         
         return response

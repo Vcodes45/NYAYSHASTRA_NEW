@@ -1,6 +1,6 @@
 """
 NyayGuru AI Pro - LLM Service
-Handles LLM integration with Gemini API (primary), Groq API, or OpenAI (fallback).
+Local Ollama SLM (default) with opt-in Groq/Gemini/OpenAI providers.
 """
 
 from typing import Optional, List, Dict, Any, AsyncGenerator
@@ -18,8 +18,14 @@ GROQ_API_BASE = "https://api.groq.com/openai/v1"
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/openai"
 
 
+class LLMUnavailableError(RuntimeError):
+    """Raised when no configured LLM provider could produce output."""
+
+
 class LLMService:
-    """Service for LLM-based text generation using Groq."""
+    """LLM generation service. Local Ollama SLM is the default; cloud providers are opt-in."""
+    
+    CLOUD_PROVIDERS = ("groq", "gemini", "openai")
     
     def __init__(self):
         self.gemini_api_key = settings.gemini_api_key
@@ -30,25 +36,55 @@ class LLMService:
         self.openai_model = settings.openai_model
         self._initialized = False
         self.provider = None
+        self.ollama = None
+        self.cloud_provider = None
+    
+    @property
+    def model_name(self) -> Optional[str]:
+        if self.provider == "ollama" and self.ollama:
+            return self.ollama.model_name
+        return {"groq": self.groq_model, "gemini": self.gemini_model,
+                "openai": self.openai_model}.get(self.provider)
+    
+    @property
+    def last_usage(self) -> Dict[str, Any]:
+        return self.ollama.last_usage if self.provider == "ollama" and self.ollama else {}
+    
+    def _configured_cloud_provider(self) -> Optional[str]:
+        keys = {"groq": self.groq_api_key, "gemini": self.gemini_api_key, "openai": self.openai_api_key}
+        if settings.llm_provider in self.CLOUD_PROVIDERS:
+            return settings.llm_provider if keys[settings.llm_provider] else None
+        return next((p for p in self.CLOUD_PROVIDERS if keys[p]), None)
     
     async def initialize(self):
-        """Initialize LLM client."""
+        """Initialize LLM provider. Cloud is used only if explicitly selected or allowed as fallback."""
         if self._initialized:
             return
         
-        # Prefer Groq for generation, fallback to Gemini, then OpenAI
-        if self.groq_api_key:
-            self.provider = "groq"
-            logger.info(f"Groq LLM initialized with model: {self.groq_model}")
-        elif self.gemini_api_key:
-            self.provider = "gemini"
-            logger.info(f"Gemini LLM initialized with model: {self.gemini_model}")
-        elif self.openai_api_key:
-            self.provider = "openai"
-            logger.info(f"OpenAI LLM initialized with model: {self.openai_model}")
+        self.cloud_provider = self._configured_cloud_provider()
+        
+        if settings.llm_provider == "ollama":
+            from app.services.ollama_service import OllamaService
+            self.ollama = OllamaService()
+            try:
+                await self.ollama.initialize()
+                if not self.ollama.model_available:
+                    raise LLMUnavailableError(f"Ollama model '{self.ollama.model_name}' not found")
+                self.provider = "ollama"
+                logger.info(f"[LLM] provider=ollama model={self.ollama.model_name}")
+            except Exception as e:
+                logger.error(f"[LLM] Local SLM unavailable: {e}")
+                if settings.allow_cloud_fallback and self.cloud_provider:
+                    self.provider = self.cloud_provider
+                    logger.warning(f"[LLM] Falling back to cloud provider: {self.provider}")
+                else:
+                    self.provider = None
         else:
-            self.provider = None
-            logger.warning("No LLM API key available - using fallback responses")
+            self.provider = self.cloud_provider
+            logger.info(f"[LLM] provider={self.provider} (cloud explicitly configured)")
+        
+        if not self.provider:
+            logger.warning("[LLM] No LLM provider available - responses will be retrieval-only")
         
         self._initialized = True
     
@@ -58,91 +94,63 @@ class LLMService:
             return "not_initialized"
         return self.provider or "none"
     
-    async def generate(self, prompt: str, max_tokens: int = 2000, 
-                      temperature: float = 0.7) -> str:
-        """Generate text from prompt using Gemini, Groq or OpenAI."""
+    async def _with_fallback(self, local_call, cloud_call):
+        """Run local SLM call; use the cloud only when explicitly allowed."""
+        if self.provider == "ollama":
+            try:
+                return await local_call()
+            except Exception as e:
+                logger.error(f"[OLLAMA] generation failed: {e}")
+                if not (settings.allow_cloud_fallback and self.cloud_provider):
+                    raise LLMUnavailableError(str(e)) from e
+                logger.warning(f"[LLM] Cloud fallback to {self.cloud_provider}")
+                return await cloud_call(self.cloud_provider)
+        if self.provider in self.CLOUD_PROVIDERS:
+            return await cloud_call(self.provider)
+        raise LLMUnavailableError("No LLM provider configured")
+    
+    async def generate(self, prompt: str, max_tokens: int = 512,
+                      temperature: float = 0.1) -> str:
+        """Generate text from a single prompt."""
+        async def local():
+            return await self.ollama.generate(prompt, temperature=temperature, max_tokens=max_tokens)
         
-        if self.provider == "gemini":
-            return await self._gemini_generate(prompt, max_tokens, temperature)
-        elif self.provider == "groq":
-            return await self._groq_generate(prompt, max_tokens, temperature)
-        elif self.provider == "openai":
-            return await self._openai_generate(prompt, max_tokens, temperature)
-        else:
-            return self._generate_fallback_response(prompt)
+        async def cloud(provider):
+            fn = {"gemini": self._gemini_generate, "groq": self._groq_generate,
+                  "openai": self._openai_generate}[provider]
+            return await fn(prompt, max_tokens, temperature)
+        
+        return await self._with_fallback(local, cloud)
 
     async def generate_chat(self, messages: List[Dict[str, str]], 
-                           max_tokens: int = 2000, 
-                           temperature: float = 0.7) -> str:
+                           max_tokens: int = 512, 
+                           temperature: float = 0.1) -> str:
         """Generate response for a list of chat messages."""
-        if self.provider == "gemini":
-            try:
-                async with httpx.AsyncClient(timeout=30.0) as client:
-                    response = await client.post(
-                        f"{GEMINI_API_BASE}/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {self.gemini_api_key}",
-                            "Content-Type": "application/json"
-                        },
-                        json={
-                            "model": self.gemini_model,
-                            "messages": messages,
-                            "max_tokens": max_tokens,
-                            "temperature": temperature
-                        }
-                    )
-                    if response.status_code == 200:
-                        return response.json()["choices"][0]["message"]["content"]
-                    else:
-                        logger.error(f"Gemini chat API error: {response.status_code} - {response.text[:200]}")
-            except Exception as e:
-                logger.error(f"Gemini generate_chat failed: {e}")
-
-        elif self.provider == "groq":
-            try:
-                async with httpx.AsyncClient(timeout=30.0) as client:
-                    response = await client.post(
-                        f"{GROQ_API_BASE}/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {self.groq_api_key}",
-                            "Content-Type": "application/json"
-                        },
-                        json={
-                            "model": self.groq_model,
-                            "messages": messages,
-                            "max_tokens": max_tokens,
-                            "temperature": temperature
-                        }
-                    )
-                    if response.status_code == 200:
-                        return response.json()["choices"][0]["message"]["content"]
-            except Exception as e:
-                logger.error(f"Groq generate_chat failed: {e}")
+        async def local():
+            return await self.ollama.generate_chat(messages, temperature=temperature, max_tokens=max_tokens)
         
-        elif self.provider == "openai":
-            try:
-                async with httpx.AsyncClient(timeout=30.0) as client:
-                    response = await client.post(
-                        "https://api.openai.com/v1/chat/completions",
-                        headers={
-                            "Authorization": f"Bearer {self.openai_api_key}",
-                            "Content-Type": "application/json"
-                        },
-                        json={
-                            "model": self.openai_model,
-                            "messages": messages,
-                            "max_tokens": max_tokens,
-                            "temperature": temperature
-                        }
-                    )
-                    if response.status_code == 200:
-                        return response.json()["choices"][0]["message"]["content"]
-            except Exception as e:
-                logger.error(f"OpenAI generate_chat failed: {e}")
-
-        # Fallback - return template response directly, DO NOT recurse into self.generate()
-        user_msg = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
-        return self._generate_fallback_response(user_msg)
+        return await self._with_fallback(
+            local, lambda provider: self._cloud_chat(provider, messages, max_tokens, temperature)
+        )
+    
+    async def _cloud_chat(self, provider: str, messages: List[Dict[str, str]],
+                          max_tokens: int, temperature: float) -> str:
+        """OpenAI-compatible chat call to an explicitly enabled cloud provider."""
+        base, key, model = {
+            "gemini": (GEMINI_API_BASE, self.gemini_api_key, self.gemini_model),
+            "groq": (GROQ_API_BASE, self.groq_api_key, self.groq_model),
+            "openai": ("https://api.openai.com/v1", self.openai_api_key, self.openai_model),
+        }[provider]
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            response = await client.post(
+                f"{base}/chat/completions",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                json={"model": model, "messages": messages,
+                      "max_tokens": max_tokens, "temperature": temperature}
+            )
+        if response.status_code != 200:
+            raise LLMUnavailableError(f"{provider} chat API error {response.status_code}: {response.text[:200]}")
+        return response.json()["choices"][0]["message"]["content"]
     
     async def _gemini_generate(self, prompt: str, max_tokens: int, 
                              temperature: float) -> str:
@@ -406,22 +414,10 @@ Translation:"""
         return await self.generate(prompt, max_tokens=len(text) * 2)
     
     def _generate_fallback_response(self, prompt: str) -> str:
-        """Generate fallback response when no LLM API is available."""
-        logger.warning("No LLM API available - using fallback response")
-        
-        return """Based on analysis of your legal query under Indian law:
-
-**Relevant Legal Framework:**
-The query has been analyzed against the Indian Penal Code (IPC) and Bhartiya Nyaya Sanhita (BNS), 2023.
-
-**Key Points:**
-1. The applicable statutory provisions have been identified
-2. Relevant case law precedents may apply
-3. The BNS, 2023 has modernized several provisions from the IPC
-
-**Note:** To provide more detailed AI-powered analysis, please configure an LLM API key (Gemini, Groq or OpenAI) in the backend environment.
-
-⚖️ *This information is for educational purposes only. Please consult a qualified legal professional for specific legal advice.*"""
+        """Controlled message when a cloud provider fails (never a fabricated legal answer)."""
+        logger.warning("[LLM] Generation unavailable - returning controlled message")
+        return ("The legal language model is currently unavailable, so I cannot generate a "
+                "reliable answer. Please try again later.")
 
 
 # System prompt for legal AI

@@ -56,6 +56,7 @@ class EmbeddingService:
             
         self._initialized = False
         self.use_api = False
+        self._query_cache = {}
         
     def initialize(self):
         """Lazy initialization of the embedding model."""
@@ -64,8 +65,8 @@ class EmbeddingService:
             
         from app.config import settings
         
-        # Try to use Gemini API first to save memory (Render 512MB limit)
-        if settings.gemini_api_key:
+        # Gemini API embeddings only when explicitly enabled: the index must be built with the same model
+        if settings.embedding_use_api and settings.gemini_api_key:
             self.use_api = True
             self.api_key = settings.gemini_api_key
             self.embedding_dim = 768  # text-embedding-004 dimension
@@ -74,26 +75,16 @@ class EmbeddingService:
             return
             
         try:
-            # Lazy imports
-            if "bge-m3" in self.model_name.lower():
-                try:
-                    from FlagEmbedding import BGEM3FlagModel
-                    logger.info(f"Loading BGE-M3 model: {self.model_name}")
-                    self.model = BGEM3FlagModel(
-                        self.model_name,
-                        use_fp16=self.use_fp16
-                    )
-                    logger.info("✅ BGE-M3 model loaded successfully")
-                except (ImportError, NameError):
-                    logger.warning("BGE-M3 not available. Falling back...")
-                    self.model_name = "sentence-transformers/all-MiniLM-L6-v2"
-            
-            if not self.model:
-                from sentence_transformers import SentenceTransformer
-                logger.info(f"Loading sentence-transformer model: {self.model_name}")
-                self.model = SentenceTransformer(self.model_name)
-                self.embedding_dim = self.model.get_sentence_embedding_dimension()
-                logger.info(f"✅ Model {self.model_name} loaded (dim: {self.embedding_dim})")
+            # sentence-transformers loads BGE-M3 dense head natively (FlagEmbedding is incompatible
+            # with transformers>=5). No silent fallback to another model: the index dimension must match.
+            import torch
+            from sentence_transformers import SentenceTransformer
+            device = "mps" if torch.backends.mps.is_available() else "cpu"
+            logger.info(f"Loading embedding model: {self.model_name} on {device}")
+            self.model = SentenceTransformer(self.model_name, device=device)
+            self.model.max_seq_length = min(self.model.max_seq_length or 1024, 1024)
+            self.embedding_dim = self.model.get_embedding_dimension()
+            logger.info(f"✅ Model {self.model_name} loaded (dim: {self.embedding_dim})")
             
             self._initialized = True
             
@@ -158,27 +149,13 @@ class EmbeddingService:
                     
                 embeddings = np.array(embeddings_list)
                 
-            # Check if using BGE-M3 (check model class name instead of isinstance)
-            elif BGE_M3_AVAILABLE and hasattr(self.model, 'encode') and 'BGEM3' in str(type(self.model)):
-                # BGE-M3 encoding (MEMORY-OPTIMIZED)
-                result = self.model.encode(
-                    texts,
-                    batch_size=min(batch_size, 8),  # Cap at 8 for safety
-                    max_length=4096,  # Reduced from 8192 to save RAM
-                    return_dense=True,
-                    return_sparse=False,
-                    return_colbert_vecs=False
-                )
-                # BGE-M3 returns a dict with 'dense_vecs' key
-                embeddings = result['dense_vecs'] if isinstance(result, dict) else result
-                
             else:
-                # Sentence-transformers encoding
                 embeddings = self.model.encode(
                     texts,
-                    batch_size=min(batch_size, 8),  # Cap at 8 for safety
+                    batch_size=min(batch_size, 16),
                     show_progress_bar=False,
-                    convert_to_numpy=True
+                    convert_to_numpy=True,
+                    normalize_embeddings=True,  # cosine space in Chroma
                 )
             
             # Return single embedding if input was single text
@@ -188,11 +165,9 @@ class EmbeddingService:
             return embeddings
             
         except Exception as e:
-            logger.error(f"Embedding generation failed: {e}")
-            # Return zero vectors as fallback
-            if is_single:
-                return np.zeros(self.embedding_dim)
-            return np.zeros((len(texts), self.embedding_dim))
+            # Fail loudly: zero vectors would silently return arbitrary "evidence"
+            logger.error(f"[EMBEDDING] generation failed: {e}")
+            raise
     
     def embed_query(self, query: str) -> np.ndarray:
         """
@@ -205,9 +180,16 @@ class EmbeddingService:
         Returns:
             Query embedding vector
         """
-        # For BGE-M3, queries and documents use the same encoding
-        # But we could add query prefixes if needed in the future
-        return self.embed(query)
+        # For BGE-M3, queries and documents use the same encoding; cache repeated queries
+        key = query.strip()
+        cached = self._query_cache.get(key)
+        if cached is not None:
+            return cached
+        vec = self.embed(query)
+        self._query_cache[key] = vec
+        if len(self._query_cache) > 512:
+            self._query_cache.pop(next(iter(self._query_cache)))
+        return vec
     
     def embed_documents(self, documents: List[str], batch_size: int = 32) -> np.ndarray:
         """
