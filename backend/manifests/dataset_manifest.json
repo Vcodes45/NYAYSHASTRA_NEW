@@ -1,0 +1,61 @@
+{
+  "datasets": {
+    "BNS_2023": {
+      "dataset_name": "Bharatiya Nyaya Sanhita, 2023",
+      "source": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "sha256": "c9da896e7a16c481a46235789f74f545b7a9ed7f3a5c8049d0b1b9252c6731f4",
+      "license": "Government of India legislative text (public document; reuse per Government Open Data / India Code terms)",
+      "jurisdiction": "India",
+      "document_type": "statute",
+      "authority_level": 2,
+      "date_range": "2024-07-01",
+      "number_of_records": {
+        "sections": 358,
+        "chunks": 428
+      },
+      "preprocessing_method": "pdfplumber layout extraction; page chrome + margin notes separated; NFKC/whitespace normalisation only; split per section, sub-section packing <=1800 chars",
+      "intended_use": "RAG retrieval (source of truth); grounded instruction-data generation",
+      "train_eval_role": "retrieval corpus (not raw training text)",
+      "ingested_at": "2026-10-08T15:17:21.282341+00:00"
+    },
+    "BNSS_2023": {
+      "dataset_name": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+      "source": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250884_2_english_01042024.pdf",
+      "sha256": "5e60e2afe30d0fe7eca4f8126301146b76c86a444e690581f81eb564843517fe",
+      "license": "Government of India legislative text (public document; reuse per Government Open Data / India Code terms)",
+      "jurisdiction": "India",
+      "document_type": "statute",
+      "authority_level": 2,
+      "date_range": "2024-07-01",
+      "number_of_records": {
+        "sections": 531,
+        "chunks": 634
+      },
+      "preprocessing_method": "pdfplumber layout extraction; page chrome + margin notes separated; NFKC/whitespace normalisation only; split per section, sub-section packing <=1800 chars",
+      "intended_use": "RAG retrieval (source of truth); grounded instruction-data generation",
+      "train_eval_role": "retrieval corpus (not raw training text)",
+      "ingested_at": "2026-10-08T15:18:39.697970+00:00"
+    },
+    "BSA_2023": {
+      "dataset_name": "Bharatiya Sakshya Adhiniyam, 2023",
+      "source": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250882_english_01042024.pdf",
+      "sha256": "13e2b6eb66add222c7262ccaa0b08d58e48ca22cdf0953f6541123ef039de239",
+      "license": "Government of India legislative text (public document; reuse per Government Open Data / India Code terms)",
+      "jurisdiction": "India",
+      "document_type": "statute",
+      "authority_level": 2,
+      "date_range": "2024-07-01",
+      "number_of_records": {
+        "sections": 170,
+        "chunks": 200
+      },
+      "preprocessing_method": "pdfplumber layout extraction; page chrome + margin notes separated; NFKC/whitespace normalisation only; split per section, sub-section packing <=1800 chars",
+      "intended_use": "RAG retrieval (source of truth); grounded instruction-data generation",
+      "train_eval_role": "retrieval corpus (not raw training text)",
+      "ingested_at": "2026-10-08T15:19:05.075745+00:00"
+    }
+  }
+}

@@ -32,118 +32,73 @@ class StatuteRetrievalAgent(BaseAgent):
         self.statute_service = statute_service or get_statute_service()
     
     async def process(self, context: AgentContext) -> AgentContext:
-        """Retrieve relevant statutes based on query from database."""
+        """Retrieve authoritative statute evidence via hybrid RAG (metadata + dense + BM25 + rerank)."""
+        import asyncio
+        from app.services.hybrid_search_service import get_hybrid_search_service, EmptyKnowledgeBaseError
         
-        print(f"\n[STATUTE_AGENT] Starting retrieval")
-        print(f"[STATUTE_AGENT]   Query: {context.query[:80]}...")
-        print(f"[STATUTE_AGENT]   Specified domain: {context.specified_domain}")
-        print(f"[STATUTE_AGENT]   Detected domain: {context.detected_domain}")
-        print(f"[STATUTE_AGENT]   vector_store available: {self.vector_store is not None}")
+        sections = [(e.get("act"), e["value"]) for e in context.entities if e["type"] == "section"]
+        articles = [e["value"] for e in context.entities if e["type"] == "article"]
+        act_codes = [e["value"] for e in context.entities if e["type"] == "act"]
+        if context.specified_domain and context.specified_domain != "all":
+            domain = context.specified_domain
+        else:  # auto-detected domain is used as a metadata filter only when the classifier is confident
+            domain = context.detected_domain if context.domain_confidence >= 0.6 else None
         
-        logger.info(f"[STATUTE AGENT] Starting retrieval for query: {context.query[:50]}...")
-        logger.info(f"[STATUTE AGENT] Specified domain: {context.specified_domain}")
-        logger.info(f"[STATUTE AGENT] Detected domain: {context.detected_domain}")
-        
-        # Ensure vector store is available
-        if not self.vector_store:
-            print("[STATUTE_AGENT]   Vector store is None, initializing...")
-            try:
-                from app.services.vector_store import get_vector_store
-                self.vector_store = await get_vector_store()
-                print(f"[STATUTE_AGENT]   Vector store initialized: {self.vector_store is not None}")
-                logger.info("[STATUTE AGENT] Vector store initialized")
-            except Exception as e:
-                print(f"[STATUTE_AGENT]   ERROR initializing vector store: {e}")
-                logger.warning(f"Vector store not available in StatuteRetrievalAgent: {e}")
-        
-        # Extract sections mentioned in query
-        sections = [e["value"] for e in context.entities if e["type"] == "section"]
-        print(f"[STATUTE_AGENT]   Extracted sections: {sections}")
-        
-        retrieved_statutes = []
-        
-        # 1. Direct section lookup if sections are mentioned
-        if sections:
-            for section in sections:
-                for act_code in context.applicable_acts or ["IPC", "BNS"]:
-                    statute = await self.statute_service.get_section(section, act_code)
-                    if statute:
-                        retrieved_statutes.append(statute)
-                        print(f"[STATUTE_AGENT]   Found statute: {act_code} Section {section}")
-                        logger.info(f"Retrieved {act_code} Section {section} from database")
-        
-        # 2. Semantic search for additional relevant statutes with domain filter
-        if self.vector_store:
-            query = context.reformulated_query or context.query
-            
-            # Get domain from context (specified or detected)
-            domain_filter = context.specified_domain if context.specified_domain and context.specified_domain != "all" else None
-            print(f"[STATUTE_AGENT]   Domain filter for search: {domain_filter}")
-            logger.info(f"Retrieving statutes for domain: {domain_filter}")
-            if not domain_filter and context.detected_domain:
-                domain_filter = context.detected_domain
-            
-            # Search statutes with domain filter
-            print(f"[STATUTE_AGENT]   Calling search_statutes...")
-            semantic_results = await self.vector_store.search_statutes(
-                query=query,
-                act_codes=context.applicable_acts,
-                domain=domain_filter,
-                limit=5
+        try:
+            search = await asyncio.to_thread(get_hybrid_search_service)
+            evidence, diag = await asyncio.to_thread(
+                search.search,
+                context.query,
+                domain=domain,
+                act_codes=act_codes or None,
+                sections=sections or None,
+                articles=articles or None,
             )
-            print(f"[STATUTE_AGENT]   search_statutes returned {len(semantic_results)} results")
-            
-            # Add unique results
-            existing_ids = {s.get("id") for s in retrieved_statutes}
-            for result in semantic_results:
-                if result.get("id") not in existing_ids:
-                    retrieved_statutes.append(result)
-            
-            # Also search PDF documents with domain filter
-            print(f"[STATUTE_AGENT]   Calling search_documents...")
-            doc_results = await self.vector_store.search_documents(
-                query=query,
-                domain=domain_filter,
-                limit=3
-            )
-            print(f"[STATUTE_AGENT]   search_documents returned {len(doc_results)} results")
-            
-            logger.info(f"[STATUTE AGENT] Semantic search returned {len(semantic_results)} statutes, {len(doc_results)} documents")
-            
-            # Add document results as context
-            for doc in doc_results:
-                if doc.get("id") not in existing_ids:
-                    retrieved_statutes.append({
-                        "id": doc.get("id"),
-                        "content_en": doc.get("content", doc.get("content_en", "")),
-                        "source": "document",
-                        "domain": doc.get("domain", doc.get("category", "")),
-                        "filename": doc.get("filename", "")
-                    })
-                    logger.info(f"[STATUTE AGENT] Added doc: {doc.get('filename', 'unknown')[:30]}...")
+            context.retrieval_diagnostics = {**diag, "collection": search.collection_name,
+                                             "document_count": search.count()}
+            context.missing_sections = await asyncio.to_thread(search.missing_sections, sections)
+        except EmptyKnowledgeBaseError as e:
+            logger.error(f"[RETRIEVAL] {e}")
+            context.kb_empty = True
+            context.add_error(self.name, str(e))
+            evidence = []
+        except Exception as e:
+            logger.error(f"[RETRIEVAL] failed: {e}")
+            context.add_error(self.name, f"retrieval failed: {e}")
+            evidence = []
         
-        # 3. If no specific sections found, do keyword search in database
-        if not retrieved_statutes:
-            query = context.reformulated_query or context.query
-            retrieved_statutes = await self.statute_service.search_statutes(
-                query=query,
-                act_codes=context.applicable_acts,
-                limit=5
-            )
-            logger.info(f"Keyword search returned {len(retrieved_statutes)} results from database")
+        context.evidence = evidence
+        context.statutes = [self._to_statute(ev) for ev in evidence]
         
-        # 4. Get IPC-BNS mappings for retrieved sections
-        ipc_sections = [s for s in retrieved_statutes if s.get("act_code") == "IPC"]
+        # Cross-mappings are shown in the UI only (never fed to the SLM as evidence)
+        ipc_sections = [s for s in context.statutes if s.get("act_code") == "IPC"]
+        context.ipc_bns_mappings = await self._get_cross_mappings(ipc_sections)
         
-        mappings = await self._get_cross_mappings(ipc_sections)
-        
-        # Update context
-        context.statutes = retrieved_statutes
-        context.ipc_bns_mappings = mappings
-        
-        logger.info(f"Retrieved {len(retrieved_statutes)} statutes, {len(mappings)} mappings from database")
-        
+        logger.info(f"[RETRIEVAL] {len(evidence)} evidence blocks: "
+                    f"{[(s['act_code'], s['section_number']) for s in context.statutes]}")
         return context
+    
+    @staticmethod
+    def _to_statute(ev: Dict[str, Any]) -> Dict[str, Any]:
+        """Shape a retrieved chunk like the statute objects the frontend already renders."""
+        meta = ev.get("metadata", {})
+        return {
+            "id": ev["id"],
+            "section_number": meta.get("section") or meta.get("article", ""),
+            "act_code": meta.get("act_code", ""),
+            "act_name": meta.get("act_name", ""),
+            "title_en": meta.get("section_title", ""),
+            "content_en": ev["content"],
+            "content": ev["content"],
+            "domain": meta.get("legal_domain", ""),
+            "chapter": meta.get("chapter", ""),
+            "source": meta.get("source", ""),
+            "source_url": meta.get("source_url", ""),
+            "authority_level": meta.get("authority_level"),
+            "status": meta.get("status", ""),
+            "relevance_score": ev.get("rerank_score"),
+            "rrf_score": ev.get("rrf_score"),
+        }
     
     async def _get_cross_mappings(self, ipc_sections: List[Dict]) -> List[Dict]:
         """Get cross-mappings between IPC and BNS sections from database."""
@@ -169,7 +124,9 @@ class StatuteRetrievalAgent(BaseAgent):
                             "new": mapping.get("new_punishment", ""),
                             "increased": mapping.get("punishment_increased", False)
                         } if mapping.get("punishment_changed") else None,
-                        "mapping_type": mapping.get("mapping_type", "exact")
+                        "mapping_type": mapping.get("mapping_type", "exact"),
+                        # Seeded from mappings.csv, which has no recorded official provenance
+                        "verified": False,
                     })
                     logger.info(f"Found mapping: IPC {section_num} -> BNS {mapping.get('bns_section')}")
         

@@ -22,8 +22,31 @@ class Settings(BaseSettings):
     
     # Vector Database
     chroma_persist_dir: str = "./chroma_db"
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"  # Changed to smaller model to prevent OOM
-    
+    embedding_model: str = "BAAI/bge-m3"  # Must match the model used at ingestion time
+    embedding_use_api: bool = False  # Gemini embeddings only if explicitly enabled (dimension must match index)
+
+    # RAG pipeline
+    rag_collection: str = "legal_documents_semantic"
+    rag_dense_k: int = 15  # Dense candidates
+    rag_lexical_k: int = 15  # BM25 candidates
+    rag_top_k: int = 5  # Evidence blocks sent to the SLM
+    rag_rerank_candidates: int = 12  # Fused candidates scored by the cross-encoder (12 >= 20 on benchmark recall, faster)
+    rag_min_rerank_score: float = 0.15  # Below this, evidence is treated as irrelevant
+    rag_context_token_budget: int = 3000
+    rag_cache_size: int = 256
+    use_reranker: bool = True
+    reranker_model: str = "BAAI/bge-reranker-v2-m3"
+
+    # Local SLM (Ollama) - default runtime generation provider
+    llm_provider: str = "ollama"  # ollama | groq | gemini | openai
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "nyayshastra-legal"
+    ollama_timeout: float = 120.0
+    ollama_num_ctx: int = 4096
+    llm_max_output_tokens: int = 512
+    llm_temperature: float = 0.1
+    allow_cloud_fallback: bool = False  # Cloud LLMs only when explicitly enabled AND local SLM fails
+
     # OpenAI
     openai_api_key: str = ""
     openai_model: str = "gpt-4-turbo-preview"

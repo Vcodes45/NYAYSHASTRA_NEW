@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 SECTION_PATTERN = re.compile(r'(?:section|sec|धारा|§)\s*(\d+[a-zA-Z]?)', re.IGNORECASE)
 IPC_PATTERN = re.compile(r'\b(?:ipc|indian penal code|भारतीय दंड संहिता)\b', re.IGNORECASE)
 BNS_PATTERN = re.compile(r'\b(?:bns|bhartiya nyaya sanhita|भारतीय न्याय संहिता)\b', re.IGNORECASE)
+ARTICLE_PATTERN = re.compile(r'(?:article|art\.|अनुच्छेद)\s*(\d+[a-zA-Z]?)', re.IGNORECASE)
 
 
 class QueryUnderstandingAgent(BaseAgent):
@@ -53,64 +54,47 @@ class QueryUnderstandingAgent(BaseAgent):
             context.entities.extend([{"type": "section", "value": s} for s in sections])
             logger.info(f"Extracted sections: {sections}")
         
-        # 3. Use LLM for intelligent domain detection
-        from app.services.llm_router import LLMRouter
-        from app.services.llm_service import get_llm_service
-        
-        # Initialize LLM router
-        if not hasattr(self, 'llm_router'):
-            llm = await get_llm_service()
-            self.llm_router = LLMRouter(llm)
+        # 3. Domain detection with the BM25 + embedding classifier (no LLM call needed)
+        await self._init_classifier()
+        detected_domain, confidence, scores = await self.domain_classifier.classify(context.query)
+        context.domain_confidence = confidence
         
         if context.specified_domain and context.specified_domain != "all":
-            # User selected a specific domain - verify it matches the query
-            is_match, suggested_domain = await self.llm_router.verify_domain_match(
-                query, context.specified_domain
-            )
-            
-            if not is_match:
-                # Domain mismatch - inform user
-                context.detected_domain = suggested_domain
+            spec = context.specified_domain
+            spec_score = next((v for k, v in scores.items() if k.lower() == spec.lower()), None)
+            # Reject only on a clear mismatch: classifier is confident and the chosen domain scores very low
+            if (spec_score is not None and detected_domain.lower() != spec.lower()
+                    and confidence >= 0.6 and spec_score < 0.2):
+                context.detected_domain = detected_domain
                 context.is_relevant = False
                 context.rejection_message = (
-                    f"⚠️ Your query appears to be about **{suggested_domain}** law, "
-                    f"but you've selected **{context.specified_domain}** domain. "
+                    f"⚠️ Your query appears to be about **{detected_domain}** law, "
+                    f"but you've selected **{spec}** domain. "
                     f"Please switch to the correct domain for accurate results."
                 )
-                logger.warning(f"[DOMAIN] Mismatch - query is {suggested_domain}, user selected {context.specified_domain}")
+                logger.warning(f"[DOMAIN] Mismatch - query is {detected_domain}, user selected {spec}")
             else:
-                context.detected_domain = context.specified_domain
-                context.is_relevant = True
-                logger.info(f"[DOMAIN] Using specified domain: {context.detected_domain}")
+                context.detected_domain = spec
+                logger.info(f"[DOMAIN] Using specified domain: {spec}")
         else:
-            # Auto-detect domain using LLM
-            detected_domain, confidence = await self.llm_router.detect_domain(query)
             context.detected_domain = detected_domain
-            context.is_relevant = True
             logger.info(f"[DOMAIN] Auto-detected: {detected_domain} (confidence: {confidence:.2f})")
         
-        # 4. Detect if IPC or BNS specific
-        is_ipc = bool(IPC_PATTERN.search(context.query))
-        is_bns = bool(BNS_PATTERN.search(context.query))
-        
-        if is_ipc:
-            context.applicable_acts.append("IPC")
-        if is_bns:
-            context.applicable_acts.append("BNS")
-            
-        # Add acts based on domain if none specified
-        if not context.applicable_acts and context.detected_domain:
-            from app.agents.regulatory_agent import JURISDICTION_ACTS
-            try:
-                # Convert string to LegalDomain enum to match keys in JURISDICTION_ACTS
-                domain_enum = LegalDomain(context.detected_domain)
-                context.applicable_acts.extend(JURISDICTION_ACTS.get(domain_enum, []))
-            except Exception as e:
-                logger.warning(f"Error getting acts for domain {context.detected_domain}: {e}")
-        
-        # If still no acts and sections found, default to both criminal codes
-        if not context.applicable_acts and sections:
-            context.applicable_acts.extend(["IPC", "BNS"])
+        # 4. Explicit act and article mentions drive exact metadata lookup
+        from app.services.grounding import ACT_ALIASES
+        query_lower = context.query.lower()
+        for code, aliases in ACT_ALIASES.items():
+            if any(re.search(rf"\b{re.escape(a)}\b", query_lower) for a in aliases):
+                context.entities.append({"type": "act", "value": code})
+                if code not in context.applicable_acts:
+                    context.applicable_acts.append(code)
+        # Bind each section number to the act named next to it ("IPC Section 302", "s. 103 of the BNS")
+        bound = self._bind_sections_to_acts(context.query, ACT_ALIASES)
+        for ent in context.entities:
+            if ent["type"] == "section" and ent["value"] in bound:
+                ent["act"] = bound[ent["value"]]
+        for article in ARTICLE_PATTERN.findall(context.query):
+            context.entities.append({"type": "article", "value": article.upper()})
         
         # 5. Extract keywords
         context.keywords = self._extract_keywords(context.query)
@@ -169,20 +153,22 @@ class QueryUnderstandingAgent(BaseAgent):
         return "en"  # Default to English
     
     def _extract_sections(self, text: str) -> List[str]:
-        """Extract section numbers from query."""
-        matches = SECTION_PATTERN.findall(text)
-        
-        # Also look for standalone numbers that might be sections
-        standalone = re.findall(r'\b(\d{2,3}[a-zA-Z]?)\b', text)
-        
-        # Common IPC sections
-        common_sections = {"302", "307", "376", "420", "498", "304", "306", "323", "354", "506", "379", "380"}
-        
-        for num in standalone:
-            if num in common_sections and num not in matches:
-                matches.append(num)
-        
-        return list(set(matches))
+        """Extract explicitly referenced section numbers from the query."""
+        return sorted({m.upper() for m in SECTION_PATTERN.findall(text)})
+    
+    @staticmethod
+    def _bind_sections_to_acts(text: str, aliases: Dict[str, List[str]]) -> Dict[str, str]:
+        """Map section number -> act code when the act is named immediately before or after it."""
+        alt = "|".join(sorted((re.escape(a) for v in aliases.values() for a in v), key=len, reverse=True))
+        code_of = {a: code for code, v in aliases.items() for a in v}
+        bound = {}
+        after = re.compile(rf"(?:section|sec\.?|s\.|धारा)\s*(\d+[a-z]?)(?:\s*\(\w+\))*\s*(?:of\s+)?(?:the\s+)?({alt})\b", re.I)
+        before = re.compile(rf"\b({alt})\s*(?:section|sec\.?|s\.|धारा)\s*(\d+[a-z]?)", re.I)
+        for m in after.finditer(text):
+            bound[m.group(1).upper()] = code_of[m.group(2).lower()]
+        for m in before.finditer(text):
+            bound.setdefault(m.group(2).upper(), code_of[m.group(1).lower()])
+        return bound
     
     def _extract_keywords(self, text: str) -> List[str]:
         """Extract important keywords from query."""

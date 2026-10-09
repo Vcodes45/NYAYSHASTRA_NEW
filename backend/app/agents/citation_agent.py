@@ -256,7 +256,15 @@ class CitationAgent(BaseAgent):
             "34": "37788",     # Common intention
         }
         
-        if act_code == "IPC":
+        source_name = "Indian Kanoon"
+        verified = False
+        if statute.get("source_url"):
+            # Retrieved from an indexed official source: cite that source directly
+            url = statute["source_url"]
+            source = "official"
+            source_name = statute.get("source") or "Official source"
+            verified = True
+        elif act_code == "IPC":
             doc_id = IPC_SECTION_DOCS.get(section, "")
             if doc_id:
                 url = f"https://indiankanoon.org/doc/{doc_id}/"
@@ -294,12 +302,12 @@ class CitationAgent(BaseAgent):
             "title": citation_title,
             "title_hi": statute.get("title_hi", "") or "",
             "source": source,
-            "source_name": "Indian Kanoon",
+            "source_name": source_name,
             "url": url,
             "excerpt": excerpt,
             "year": statute.get("year_enacted"),
             "type": "statute",
-            "verified": True,
+            "verified": verified,
             "section_number": section or "N/A",
             "act_code": act_code
         }
@@ -376,13 +384,15 @@ class CitationAgent(BaseAgent):
     
     def _deduplicate_citations(self, citations: List[Dict]) -> List[Dict]:
         """Remove duplicate citations."""
-        seen_urls = set()
+        seen = set()
         unique_citations = []
         
         for citation in citations:
-            url = citation.get("url", "")
-            if url not in seen_urls:
-                seen_urls.add(url)
+            # Many sections share one official PDF URL, so the key includes the provision
+            key = (citation.get("url", ""), citation.get("act_code"), citation.get("section_number"),
+                   citation.get("title"))
+            if key not in seen:
+                seen.add(key)
                 unique_citations.append(citation)
         
         return unique_citations

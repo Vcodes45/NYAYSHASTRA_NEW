@@ -1,0 +1,57 @@
+{
+  "BNS_2023": {
+    "id": "BNS_2023",
+    "status": "ok",
+    "resolved_url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+    "path": "data/raw/statutes/BNS_2023.pdf",
+    "bytes": 1324200,
+    "sha256": "c9da896e7a16c481a46235789f74f545b7a9ed7f3a5c8049d0b1b9252c6731f4",
+    "fetched_at": "2026-10-08T14:43:04.818357+00:00"
+  },
+  "BNSS_2023": {
+    "id": "BNSS_2023",
+    "status": "ok",
+    "resolved_url": "https://www.mha.gov.in/sites/default/files/250884_2_english_01042024.pdf",
+    "path": "data/raw/statutes/BNSS_2023.pdf",
+    "bytes": 2033181,
+    "sha256": "5e60e2afe30d0fe7eca4f8126301146b76c86a444e690581f81eb564843517fe",
+    "fetched_at": "2026-10-08T14:56:02.802614+00:00"
+  },
+  "BSA_2023": {
+    "id": "BSA_2023",
+    "status": "ok",
+    "resolved_url": "https://www.mha.gov.in/sites/default/files/250882_english_01042024.pdf",
+    "path": "data/raw/statutes/BSA_2023.pdf",
+    "bytes": 670370,
+    "sha256": "13e2b6eb66add222c7262ccaa0b08d58e48ca22cdf0953f6541123ef039de239",
+    "fetched_at": "2026-10-08T14:56:02.934076+00:00"
+  },
+  "IPC_1860": {
+    "id": "IPC_1860",
+    "status": "failed",
+    "errors": [
+      "https://www.indiacode.nic.in/handle/123456789/4219: No PDF bitstream link found on https://www.indiacode.nic.in/handle/123456789/4219"
+    ]
+  },
+  "CRPC_1973": {
+    "id": "CRPC_1973",
+    "status": "failed",
+    "errors": [
+      "https://www.indiacode.nic.in/handle/123456789/15272: No PDF bitstream link found on https://www.indiacode.nic.in/handle/123456789/15272"
+    ]
+  },
+  "IEA_1872": {
+    "id": "IEA_1872",
+    "status": "failed",
+    "errors": [
+      "https://www.indiacode.nic.in/handle/123456789/15351: No PDF bitstream link found on https://www.indiacode.nic.in/handle/123456789/15351"
+    ]
+  },
+  "COI": {
+    "id": "COI",
+    "status": "failed",
+    "errors": [
+      "https://eparlib.sansad.in/bitstream/123456789/2982247/1/29-05-27_Constitution_English_Final.pdf: timed out"
+    ]
+  }
+}

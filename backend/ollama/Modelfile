@@ -1,0 +1,13 @@
+# NyayShastra local legal SLM (base: GSMS-B/Indian-Legal-Qwen2.5-3B-GGUF, Q4_K_M)
+# Build: ollama create nyayshastra-legal -f ollama/Modelfile
+# The grounding system prompt is supplied per request by the backend (app/services/grounding.py).
+FROM hf.co/GSMS-B/Indian-Legal-Qwen2.5-3B-GGUF:Q4_K_M
+
+PARAMETER temperature 0.1
+PARAMETER top_p 0.9
+PARAMETER repeat_penalty 1.15
+PARAMETER repeat_last_n 256
+PARAMETER num_ctx 4096
+PARAMETER num_predict 512
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"

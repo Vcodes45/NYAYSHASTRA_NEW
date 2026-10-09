@@ -154,6 +154,31 @@ async def health_check():
     }
 
 
+@app.get("/health/rag", tags=["health"])
+async def rag_health():
+    """RAG + local SLM diagnostics. Returns 503 when the knowledge base is empty or the SLM is down."""
+    import asyncio
+    from app.services.llm_service import get_llm_service
+    from app.services.hybrid_search_service import get_hybrid_search_service
+
+    llm_service = await get_llm_service()
+    try:
+        search = await asyncio.to_thread(get_hybrid_search_service)
+        rag = search.diagnostics()
+    except Exception as e:
+        rag = {"error": str(e), "document_count": 0}
+    llm = {
+        "provider": llm_service.provider,
+        "model": llm_service.model_name,
+        "cloud_fallback_enabled": settings.allow_cloud_fallback,
+    }
+    healthy = rag.get("document_count", 0) > 0 and llm_service.provider == "ollama"
+    body = {"status": "ok" if healthy else "degraded", "rag": rag, "llm": llm,
+            "budgets": {"top_k": settings.rag_top_k, "context_tokens": settings.rag_context_token_budget,
+                        "max_output_tokens": settings.llm_max_output_tokens}}
+    return JSONResponse(status_code=200 if healthy else 503, content=body)
+
+
 # Root endpoint
 @app.get("/", tags=["root"])
 async def root():

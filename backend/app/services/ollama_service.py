@@ -18,37 +18,30 @@ class OllamaService:
     Ollama provides a simple API for running LLMs on your machine.
     """
     
-    # MEMORY-SAFE generation parameters
+    # Generation parameters (GPU/Metal offload is left to Ollama; num_ctx comes from settings)
     DEFAULT_OPTIONS = {
-        "num_ctx": 1536,        # Reduced from 2048 (saves more RAM, shorter context)
-        "num_thread": 4,        # Limit CPU threads
-        "num_gpu": 0,           # Force CPU-only
-        "num_batch": 64,        # Smaller batch size (was 128)
-        "num_predict": 256,     # Limit response length
-        "repeat_penalty": 1.1,
-        "temperature": 0.3,
+        "num_predict": 512,
+        "repeat_penalty": 1.15,  # 1.1 let the 3B model loop until num_predict on multi-source answers
+        "repeat_last_n": 256,
+        "temperature": 0.1,
         "top_k": 40,
         "top_p": 0.9,
     }
     
     def __init__(
         self,
-        model_name: str = "llama3:8b-instruct-q4_K_M",
-        base_url: str = "http://localhost:11434",
-        timeout: float = 120.0  # Increased timeout
+        model_name: Optional[str] = None,
+        base_url: Optional[str] = None,
+        timeout: Optional[float] = None
     ):
-        """
-        Initialize Ollama service (MEMORY-OPTIMIZED).
-        
-        Args:
-            model_name: Ollama model identifier
-                       - llama3:8b-instruct-q4_K_M (4-bit quantized, ~4.7GB)
-            base_url: Ollama server URL
-            timeout: Request timeout (reduced to 90s)
-        """
-        self.model_name = model_name
-        self.base_url = base_url
-        self.timeout = timeout
+        """Initialize Ollama service; defaults come from settings (OLLAMA_* env vars)."""
+        from app.config import settings
+        self.model_name = model_name or settings.ollama_model
+        self.base_url = base_url or settings.ollama_base_url
+        self.timeout = timeout or settings.ollama_timeout
+        self.num_ctx = settings.ollama_num_ctx
+        self.model_available = False
+        self.last_usage: Dict[str, Any] = {}
         self._initialized = False
         
     async def initialize(self):
@@ -69,14 +62,15 @@ class OllamaService:
                     logger.info(f"Available models: {', '.join(model_names)}")
                     
                     # Check if our model is available
-                    if not any(self.model_name in name for name in model_names):
+                    if not any(name == self.model_name or name.split(':')[0] == self.model_name for name in model_names):
                         logger.warning(
                             f"⚠️  Model '{self.model_name}' not found. "
                             f"Download it with: ollama pull {self.model_name}"
                         )
                     else:
                         logger.info(f"✅ Model '{self.model_name}' is ready")
-                    
+                        self.model_available = True
+
                     self._initialized = True
                 else:
                     raise Exception(f"Ollama returned status {response.status_code}")
@@ -126,7 +120,8 @@ class OllamaService:
             options = self.DEFAULT_OPTIONS.copy()
             options.update({
                 "temperature": temperature,
-                "num_predict": min(max_tokens, 512),  # Cap at 512 tokens
+                "num_predict": min(max_tokens, 1024),
+                "num_ctx": self.num_ctx,
             })
             
             payload = {
@@ -144,6 +139,12 @@ class OllamaService:
                 
                 if response.status_code == 200:
                     result = response.json()
+                    self.last_usage = {
+                        "prompt_tokens": result.get("prompt_eval_count", 0),
+                        "completion_tokens": result.get("eval_count", 0),
+                        "total_duration_s": round(result.get("total_duration", 0) / 1e9, 3),
+                    }
+                    logger.info(f"[OLLAMA] model={self.model_name} {self.last_usage}")
                     return result.get("message", {}).get("content", "")
                 else:
                     raise Exception(f"Ollama API returned status {response.status_code}: {response.text}")
@@ -241,7 +242,8 @@ class OllamaService:
             options = self.DEFAULT_OPTIONS.copy()
             options.update({
                 "temperature": temperature,
-                "num_predict": min(max_tokens, 512),
+                "num_predict": min(max_tokens, 1024),
+                "num_ctx": self.num_ctx,
             })
             
             payload = {
@@ -259,6 +261,12 @@ class OllamaService:
                 
                 if response.status_code == 200:
                     result = response.json()
+                    self.last_usage = {
+                        "prompt_tokens": result.get("prompt_eval_count", 0),
+                        "completion_tokens": result.get("eval_count", 0),
+                        "total_duration_s": round(result.get("total_duration", 0) / 1e9, 3),
+                    }
+                    logger.info(f"[OLLAMA] model={self.model_name} {self.last_usage}")
                     return result.get("message", {}).get("content", "")
                 else:
                     raise Exception(f"Ollama API returned status {response.status_code}: {response.text}")

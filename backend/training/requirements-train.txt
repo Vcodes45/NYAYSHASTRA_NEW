@@ -1,0 +1,2 @@
+# Training-only dependencies (Apple Silicon). Not needed by the API server.
+mlx-lm>=0.26.0

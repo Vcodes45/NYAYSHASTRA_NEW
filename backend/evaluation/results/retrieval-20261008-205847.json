@@ -1,0 +1,2795 @@
+{
+  "report": {
+    "recall@5": 0.872,
+    "precision@5": 0.3968,
+    "mrr": 0.8403,
+    "ndcg@5": 0.8483,
+    "latency_ms_p50": 1737.3,
+    "latency_ms_p95": 1800.7,
+    "n": 125,
+    "by_category": {
+      "statute": {
+        "recall": 1.0,
+        "mrr": 1.0,
+        "n": 25
+      },
+      "statute_topical": {
+        "recall": 0.96,
+        "mrr": 0.9133,
+        "n": 25
+      },
+      "procedural": {
+        "recall": 1.0,
+        "mrr": 0.96,
+        "n": 25
+      },
+      "comparative": {
+        "recall": 0.4,
+        "mrr": 0.4,
+        "n": 25
+      },
+      "citation": {
+        "recall": 1.0,
+        "mrr": 0.928,
+        "n": 25
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "v1-statute-000",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 2173.8618339877576,
+      "retrieved": [
+        "BNS_2023:s97"
+      ],
+      "gold": [
+        "BNS_2023:s97"
+      ],
+      "top_scores": [
+        0.2454
+      ]
+    },
+    {
+      "id": "v1-statute-001",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1742.4910420086235,
+      "retrieved": [
+        "BNS_2023:s213"
+      ],
+      "gold": [
+        "BNS_2023:s213"
+      ],
+      "top_scores": [
+        0.4137
+      ]
+    },
+    {
+      "id": "v1-statute-002",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1722.9972921777517,
+      "retrieved": [
+        "BNSS_2023:s243"
+      ],
+      "gold": [
+        "BNSS_2023:s243"
+      ],
+      "top_scores": [
+        0.7338,
+        0.2973,
+        0.2742,
+        0.2654
+      ]
+    },
+    {
+      "id": "v1-statute-003",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.2208749949932,
+      "retrieved": [
+        "BNSS_2023:s149",
+        "BNSS_2023:s151"
+      ],
+      "gold": [
+        "BNSS_2023:s149"
+      ],
+      "top_scores": [
+        0.8283,
+        0.8169
+      ]
+    },
+    {
+      "id": "v1-statute-004",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.0374589301646,
+      "retrieved": [
+        "BNSS_2023:s443"
+      ],
+      "gold": [
+        "BNSS_2023:s443"
+      ],
+      "top_scores": [
+        0.5154
+      ]
+    },
+    {
+      "id": "v1-statute-005",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1714.2623749095947,
+      "retrieved": [
+        "BNSS_2023:s86"
+      ],
+      "gold": [
+        "BNSS_2023:s86"
+      ],
+      "top_scores": [
+        0.5058
+      ]
+    },
+    {
+      "id": "v1-statute-006",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1746.188750024885,
+      "retrieved": [
+        "BSA_2023:s70"
+      ],
+      "gold": [
+        "BSA_2023:s70"
+      ],
+      "top_scores": [
+        0.1453
+      ]
+    },
+    {
+      "id": "v1-statute-007",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1734.5100829843432,
+      "retrieved": [
+        "BSA_2023:s55"
+      ],
+      "gold": [
+        "BSA_2023:s55"
+      ],
+      "top_scores": [
+        0.518
+      ]
+    },
+    {
+      "id": "v1-statute-008",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1757.5264580082148,
+      "retrieved": [
+        "BNS_2023:s103"
+      ],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": [
+        0.4128
+      ]
+    },
+    {
+      "id": "v1-statute-009",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1715.1990830898285,
+      "retrieved": [
+        "BNSS_2023:s203"
+      ],
+      "gold": [
+        "BNSS_2023:s203"
+      ],
+      "top_scores": [
+        0.4563
+      ]
+    },
+    {
+      "id": "v1-statute-010",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1722.3007909487933,
+      "retrieved": [
+        "BSA_2023:s84"
+      ],
+      "gold": [
+        "BSA_2023:s84"
+      ],
+      "top_scores": [
+        0.373
+      ]
+    },
+    {
+      "id": "v1-statute-011",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1716.3159579504281,
+      "retrieved": [
+        "BNSS_2023:s65",
+        "BNSS_2023:s397",
+        "BNSS_2023:s67"
+      ],
+      "gold": [
+        "BNSS_2023:s65"
+      ],
+      "top_scores": [
+        0.568,
+        0.9158,
+        0.8466
+      ]
+    },
+    {
+      "id": "v1-statute-012",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1692.4295839853585,
+      "retrieved": [
+        "BSA_2023:s155"
+      ],
+      "gold": [
+        "BSA_2023:s155"
+      ],
+      "top_scores": [
+        0.2178
+      ]
+    },
+    {
+      "id": "v1-statute-013",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1730.4149169940501,
+      "retrieved": [
+        "BNS_2023:s272"
+      ],
+      "gold": [
+        "BNS_2023:s272"
+      ],
+      "top_scores": [
+        0.4415
+      ]
+    },
+    {
+      "id": "v1-statute-014",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1736.41874990426,
+      "retrieved": [
+        "BNS_2023:s327"
+      ],
+      "gold": [
+        "BNS_2023:s327"
+      ],
+      "top_scores": [
+        0.7025
+      ]
+    },
+    {
+      "id": "v1-statute-015",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1736.5318341180682,
+      "retrieved": [
+        "BSA_2023:s7"
+      ],
+      "gold": [
+        "BSA_2023:s7"
+      ],
+      "top_scores": [
+        0.1652,
+        0.0378
+      ]
+    },
+    {
+      "id": "v1-statute-016",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1733.2777499686927,
+      "retrieved": [
+        "BNS_2023:s180"
+      ],
+      "gold": [
+        "BNS_2023:s180"
+      ],
+      "top_scores": [
+        0.5612
+      ]
+    },
+    {
+      "id": "v1-statute-017",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1768.8741248566657,
+      "retrieved": [
+        "BNSS_2023:s194",
+        "BNSS_2023:s195"
+      ],
+      "gold": [
+        "BNSS_2023:s194"
+      ],
+      "top_scores": [
+        0.753,
+        0.6788,
+        0.9267
+      ]
+    },
+    {
+      "id": "v1-statute-018",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1722.716666990891,
+      "retrieved": [
+        "BNSS_2023:s495"
+      ],
+      "gold": [
+        "BNSS_2023:s495"
+      ],
+      "top_scores": [
+        0.4452
+      ]
+    },
+    {
+      "id": "v1-statute-019",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1739.6423751488328,
+      "retrieved": [
+        "BNS_2023:s88"
+      ],
+      "gold": [
+        "BNS_2023:s88"
+      ],
+      "top_scores": [
+        0.4073
+      ]
+    },
+    {
+      "id": "v1-statute-020",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1702.199124963954,
+      "retrieved": [
+        "BNSS_2023:s168"
+      ],
+      "gold": [
+        "BNSS_2023:s168"
+      ],
+      "top_scores": [
+        0.7181
+      ]
+    },
+    {
+      "id": "v1-statute-021",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1734.4005000777543,
+      "retrieved": [
+        "BNS_2023:s59"
+      ],
+      "gold": [
+        "BNS_2023:s59"
+      ],
+      "top_scores": [
+        0.6089
+      ]
+    },
+    {
+      "id": "v1-statute-022",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1730.5976669304073,
+      "retrieved": [
+        "BNS_2023:s247"
+      ],
+      "gold": [
+        "BNS_2023:s247"
+      ],
+      "top_scores": [
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-statute-023",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1757.0096249692142,
+      "retrieved": [
+        "BSA_2023:s4"
+      ],
+      "gold": [
+        "BSA_2023:s4"
+      ],
+      "top_scores": [
+        0.0345
+      ]
+    },
+    {
+      "id": "v1-statute-024",
+      "category": "statute",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1737.3280830215663,
+      "retrieved": [
+        "BNSS_2023:s273"
+      ],
+      "gold": [
+        "BNSS_2023:s273"
+      ],
+      "top_scores": [
+        0.8919,
+        0.7669
+      ]
+    },
+    {
+      "id": "v1-statute_topical-000",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1729.8961668275297,
+      "retrieved": [
+        "BNSS_2023:s521"
+      ],
+      "gold": [
+        "BNSS_2023:s521"
+      ],
+      "top_scores": [
+        0.8082
+      ]
+    },
+    {
+      "id": "v1-statute_topical-001",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.0647920835763,
+      "retrieved": [
+        "BNSS_2023:s143",
+        "BNSS_2023:s141",
+        "BNSS_2023:s142",
+        "BNSS_2023:s125",
+        "BNSS_2023:s138"
+      ],
+      "gold": [
+        "BNSS_2023:s143"
+      ],
+      "top_scores": [
+        0.9831,
+        0.8887,
+        0.8452,
+        0.6663,
+        0.6554
+      ]
+    },
+    {
+      "id": "v1-statute_topical-002",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1822.8920840192586,
+      "retrieved": [
+        "BNS_2023:s200",
+        "BNS_2023:s124",
+        "BNS_2023:s72",
+        "BNS_2023:s70",
+        "BNS_2023:s66"
+      ],
+      "gold": [
+        "BNS_2023:s200"
+      ],
+      "top_scores": [
+        0.9929,
+        0.4636,
+        0.4299,
+        0.2507,
+        0.2436
+      ]
+    },
+    {
+      "id": "v1-statute_topical-003",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.2643328346312,
+      "retrieved": [
+        "BNSS_2023:s182",
+        "BNSS_2023:s354"
+      ],
+      "gold": [
+        "BNSS_2023:s182"
+      ],
+      "top_scores": [
+        0.9718,
+        0.4028
+      ]
+    },
+    {
+      "id": "v1-statute_topical-004",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 0.3333333333333333,
+      "ndcg": 0.5,
+      "latency_ms": 1780.0432089716196,
+      "retrieved": [
+        "BNS_2023:s103",
+        "BNS_2023:s104",
+        "BNS_2023:s101",
+        "BNS_2023:s105"
+      ],
+      "gold": [
+        "BNS_2023:s101"
+      ],
+      "top_scores": [
+        0.8828,
+        0.791,
+        0.7159,
+        0.6409,
+        0.5142
+      ]
+    },
+    {
+      "id": "v1-statute_topical-005",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1727.5930000469089,
+      "retrieved": [
+        "BNSS_2023:s280",
+        "BNSS_2023:s380",
+        "BNSS_2023:s215",
+        "BNSS_2023:s449",
+        "BNSS_2023:s226"
+      ],
+      "gold": [
+        "BNSS_2023:s280"
+      ],
+      "top_scores": [
+        0.9616,
+        0.8731,
+        0.8379,
+        0.712,
+        0.5501
+      ]
+    },
+    {
+      "id": "v1-statute_topical-006",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1750.8072920609266,
+      "retrieved": [
+        "BNS_2023:s77"
+      ],
+      "gold": [
+        "BNS_2023:s77"
+      ],
+      "top_scores": [
+        0.8447
+      ]
+    },
+    {
+      "id": "v1-statute_topical-007",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1743.2811250910163,
+      "retrieved": [
+        "BNS_2023:s143",
+        "BNS_2023:s144",
+        "BNS_2023:s111",
+        "BNS_2023:s145"
+      ],
+      "gold": [
+        "BNS_2023:s143"
+      ],
+      "top_scores": [
+        0.9711,
+        0.9706,
+        0.886,
+        0.7155,
+        0.1546
+      ]
+    },
+    {
+      "id": "v1-statute_topical-008",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1788.4265000466257,
+      "retrieved": [
+        "BNSS_2023:s492",
+        "BNSS_2023:s143",
+        "BNSS_2023:s142",
+        "BNSS_2023:s430",
+        "BNSS_2023:s139"
+      ],
+      "gold": [
+        "BNSS_2023:s492"
+      ],
+      "top_scores": [
+        0.9648,
+        0.9429,
+        0.8184,
+        0.808,
+        0.6713
+      ]
+    },
+    {
+      "id": "v1-statute_topical-009",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1725.3287499770522,
+      "retrieved": [
+        "BNSS_2023:s18",
+        "BNSS_2023:s338",
+        "BNSS_2023:s298"
+      ],
+      "gold": [
+        "BNSS_2023:s18"
+      ],
+      "top_scores": [
+        0.934,
+        0.899,
+        0.8619,
+        0.8445,
+        0.7162
+      ]
+    },
+    {
+      "id": "v1-statute_topical-010",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1709.0642091352493,
+      "retrieved": [
+        "BNSS_2023:s469",
+        "BNSS_2023:s5",
+        "BNSS_2023:s528"
+      ],
+      "gold": [
+        "BNSS_2023:s469"
+      ],
+      "top_scores": [
+        0.4671,
+        0.3909,
+        0.2647
+      ]
+    },
+    {
+      "id": "v1-statute_topical-011",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1713.1079169921577,
+      "retrieved": [
+        "BNSS_2023:s520",
+        "BNSS_2023:s341",
+        "BNSS_2023:s447",
+        "BNSS_2023:s206",
+        "BNSS_2023:s443"
+      ],
+      "gold": [
+        "BNSS_2023:s520"
+      ],
+      "top_scores": [
+        0.8917,
+        0.6673,
+        0.3736,
+        0.3497,
+        0.3441
+      ]
+    },
+    {
+      "id": "v1-statute_topical-012",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.6515830475837,
+      "retrieved": [
+        "BNS_2023:s212",
+        "BNS_2023:s240",
+        "BNS_2023:s175",
+        "BNS_2023:s353"
+      ],
+      "gold": [
+        "BNS_2023:s212"
+      ],
+      "top_scores": [
+        0.9717,
+        0.8472,
+        0.7058,
+        0.6982,
+        0.6971
+      ]
+    },
+    {
+      "id": "v1-statute_topical-013",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1754.5514171943069,
+      "retrieved": [
+        "BNS_2023:s345",
+        "BNS_2023:s347",
+        "BNS_2023:s348",
+        "BNS_2023:s346",
+        "BNS_2023:s349"
+      ],
+      "gold": [
+        "BNS_2023:s345"
+      ],
+      "top_scores": [
+        0.9669,
+        0.9251,
+        0.8862,
+        0.8216,
+        0.7451
+      ]
+    },
+    {
+      "id": "v1-statute_topical-014",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1734.1529580298811,
+      "retrieved": [
+        "BNS_2023:s319",
+        "BNS_2023:s242",
+        "BNS_2023:s204",
+        "BNS_2023:s174",
+        "BNS_2023:s268"
+      ],
+      "gold": [
+        "BNS_2023:s319"
+      ],
+      "top_scores": [
+        0.9942,
+        0.8727,
+        0.8093,
+        0.7884,
+        0.7398
+      ]
+    },
+    {
+      "id": "v1-statute_topical-015",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1760.711875045672,
+      "retrieved": [
+        "BNSS_2023:s102",
+        "BNSS_2023:s96",
+        "BNSS_2023:s100",
+        "BNSS_2023:s95",
+        "BNSS_2023:s74"
+      ],
+      "gold": [
+        "BNSS_2023:s102"
+      ],
+      "top_scores": [
+        0.9451,
+        0.5895,
+        0.5597,
+        0.492,
+        0.4364
+      ]
+    },
+    {
+      "id": "v1-statute_topical-016",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1716.9868750497699,
+      "retrieved": [
+        "BNSS_2023:s465",
+        "BNSS_2023:s227",
+        "BNSS_2023:s75",
+        "BNSS_2023:s100",
+        "BNSS_2023:s461"
+      ],
+      "gold": [
+        "BNSS_2023:s465"
+      ],
+      "top_scores": [
+        0.9761,
+        0.9126,
+        0.9039,
+        0.8961,
+        0.8724
+      ]
+    },
+    {
+      "id": "v1-statute_topical-017",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1764.4185000099242,
+      "retrieved": [
+        "BNS_2023:s110",
+        "BNS_2023:s102",
+        "BNS_2023:s105",
+        "BNS_2023:s101"
+      ],
+      "gold": [
+        "BNS_2023:s110"
+      ],
+      "top_scores": [
+        0.973,
+        0.9287,
+        0.9124,
+        0.8389,
+        0.8174
+      ]
+    },
+    {
+      "id": "v1-statute_topical-018",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1737.9041658714414,
+      "retrieved": [
+        "BNS_2023:s303",
+        "BNS_2023:s112",
+        "BNS_2023:s306",
+        "BNS_2023:s305"
+      ],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": [
+        0.8844,
+        0.8216,
+        0.7843,
+        0.7506,
+        0.7368
+      ]
+    },
+    {
+      "id": "v1-statute_topical-019",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1747.1310410182923,
+      "retrieved": [
+        "BNSS_2023:s344",
+        "BNSS_2023:s343",
+        "BNSS_2023:s345",
+        "BNSS_2023:s506"
+      ],
+      "gold": [
+        "BNSS_2023:s344"
+      ],
+      "top_scores": [
+        0.9429,
+        0.7856,
+        0.5186,
+        0.302,
+        0.2845
+      ]
+    },
+    {
+      "id": "v1-statute_topical-020",
+      "category": "statute_topical",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 1720.150957815349,
+      "retrieved": [
+        "BNSS_2023:s285",
+        "BNSS_2023:s377",
+        "BNSS_2023:s260",
+        "BNSS_2023:s110",
+        "BNSS_2023:s313"
+      ],
+      "gold": [
+        "BNSS_2023:s145"
+      ],
+      "top_scores": [
+        0.5064,
+        0.468,
+        0.3531,
+        0.3077,
+        0.2427
+      ]
+    },
+    {
+      "id": "v1-statute_topical-021",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1700.334707973525,
+      "retrieved": [
+        "BNSS_2023:s2",
+        "BNSS_2023:s111",
+        "BNSS_2023:s301",
+        "BNSS_2023:s234"
+      ],
+      "gold": [
+        "BNSS_2023:s2"
+      ],
+      "top_scores": [
+        0.3249,
+        0.2022,
+        0.1986,
+        0.1932,
+        0.1807
+      ]
+    },
+    {
+      "id": "v1-statute_topical-022",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1756.792041938752,
+      "retrieved": [
+        "BNSS_2023:s508",
+        "BNSS_2023:s357"
+      ],
+      "gold": [
+        "BNSS_2023:s508"
+      ],
+      "top_scores": [
+        0.9827,
+        0.2275
+      ]
+    },
+    {
+      "id": "v1-statute_topical-023",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1727.7374169789255,
+      "retrieved": [
+        "BNSS_2023:s338",
+        "BNSS_2023:s18",
+        "BNSS_2023:s248"
+      ],
+      "gold": [
+        "BNSS_2023:s338"
+      ],
+      "top_scores": [
+        0.983,
+        0.6093,
+        0.4287,
+        0.3869,
+        0.3149
+      ]
+    },
+    {
+      "id": "v1-statute_topical-024",
+      "category": "statute_topical",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "latency_ms": 1716.072291135788,
+      "retrieved": [
+        "BNSS_2023:s107",
+        "BNSS_2023:s117",
+        "BNSS_2023:s85",
+        "BNSS_2023:s503",
+        "BNSS_2023:s105"
+      ],
+      "gold": [
+        "BNSS_2023:s117"
+      ],
+      "top_scores": [
+        0.9581,
+        0.956,
+        0.8889,
+        0.7494,
+        0.6917
+      ]
+    },
+    {
+      "id": "v1-procedural-000",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1805.159708019346,
+      "retrieved": [
+        "BNSS_2023:s4",
+        "BNSS_2023:s21",
+        "BNSS_2023:s384",
+        "BNSS_2023:s363",
+        "BNSS_2023:s220"
+      ],
+      "gold": [
+        "BNSS_2023:s4"
+      ],
+      "top_scores": [
+        0.9965,
+        0.9804,
+        0.9619,
+        0.9593,
+        0.9499
+      ]
+    },
+    {
+      "id": "v1-procedural-001",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1787.0586661156267,
+      "retrieved": [
+        "BNSS_2023:s25",
+        "BNSS_2023:s285",
+        "BNSS_2023:s243",
+        "BNSS_2023:s421",
+        "BNSS_2023:s242"
+      ],
+      "gold": [
+        "BNSS_2023:s25"
+      ],
+      "top_scores": [
+        0.9907,
+        0.8289,
+        0.7053,
+        0.5587,
+        0.4682
+      ]
+    },
+    {
+      "id": "v1-procedural-002",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1754.2732909787446,
+      "retrieved": [
+        "BNSS_2023:s32",
+        "BNSS_2023:s478",
+        "BNSS_2023:s77",
+        "BNSS_2023:s55",
+        "BNSS_2023:s80"
+      ],
+      "gold": [
+        "BNSS_2023:s32"
+      ],
+      "top_scores": [
+        0.9926,
+        0.8014,
+        0.8012,
+        0.7389,
+        0.7074
+      ]
+    },
+    {
+      "id": "v1-procedural-003",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "latency_ms": 1754.8734159208834,
+      "retrieved": [
+        "BNSS_2023:s55",
+        "BNSS_2023:s35",
+        "BNSS_2023:s47",
+        "BNSS_2023:s170"
+      ],
+      "gold": [
+        "BNSS_2023:s35"
+      ],
+      "top_scores": [
+        0.9913,
+        0.9704,
+        0.96,
+        0.9547,
+        0.9535
+      ]
+    },
+    {
+      "id": "v1-procedural-004",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1734.8647501785308,
+      "retrieved": [
+        "BNSS_2023:s36",
+        "BNSS_2023:s55",
+        "BNSS_2023:s48",
+        "BNSS_2023:s82",
+        "BNSS_2023:s40"
+      ],
+      "gold": [
+        "BNSS_2023:s36"
+      ],
+      "top_scores": [
+        0.9905,
+        0.9285,
+        0.917,
+        0.886,
+        0.8659
+      ]
+    },
+    {
+      "id": "v1-procedural-005",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1772.9983751196414,
+      "retrieved": [
+        "BNSS_2023:s38",
+        "BNSS_2023:s340",
+        "BNSS_2023:s36",
+        "BNSS_2023:s83"
+      ],
+      "gold": [
+        "BNSS_2023:s38"
+      ],
+      "top_scores": [
+        0.9938,
+        0.5035,
+        0.3164,
+        0.1903
+      ]
+    },
+    {
+      "id": "v1-procedural-006",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1766.9243749696761,
+      "retrieved": [
+        "BNSS_2023:s39",
+        "BNSS_2023:s40",
+        "BNSS_2023:s36",
+        "BNSS_2023:s356",
+        "BNSS_2023:s176"
+      ],
+      "gold": [
+        "BNSS_2023:s39"
+      ],
+      "top_scores": [
+        0.9872,
+        0.9738,
+        0.4727,
+        0.4426,
+        0.4029
+      ]
+    },
+    {
+      "id": "v1-procedural-007",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1751.3234170619398,
+      "retrieved": [
+        "BNSS_2023:s40",
+        "BNSS_2023:s82",
+        "BNSS_2023:s49",
+        "BNSS_2023:s83",
+        "BNSS_2023:s36"
+      ],
+      "gold": [
+        "BNSS_2023:s40"
+      ],
+      "top_scores": [
+        0.9785,
+        0.8737,
+        0.8574,
+        0.7614,
+        0.6817
+      ]
+    },
+    {
+      "id": "v1-procedural-008",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "latency_ms": 1728.3317500259727,
+      "retrieved": [
+        "BNSS_2023:s83",
+        "BNSS_2023:s41",
+        "BNSS_2023:s82",
+        "BNSS_2023:s187",
+        "BNSS_2023:s132"
+      ],
+      "gold": [
+        "BNSS_2023:s41"
+      ],
+      "top_scores": [
+        0.9654,
+        0.9355,
+        0.8836,
+        0.8002,
+        0.7909
+      ]
+    },
+    {
+      "id": "v1-procedural-009",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1781.23754193075,
+      "retrieved": [
+        "BNSS_2023:s42",
+        "BNSS_2023:s151",
+        "BNSS_2023:s36",
+        "BNSS_2023:s149",
+        "BNSS_2023:s150"
+      ],
+      "gold": [
+        "BNSS_2023:s42"
+      ],
+      "top_scores": [
+        0.9449,
+        0.4159,
+        0.3439,
+        0.2744,
+        0.2488
+      ]
+    },
+    {
+      "id": "v1-procedural-010",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1731.140041956678,
+      "retrieved": [
+        "BNSS_2023:s43",
+        "BNSS_2023:s82",
+        "BNSS_2023:s36",
+        "BNSS_2023:s83",
+        "BNSS_2023:s40"
+      ],
+      "gold": [
+        "BNSS_2023:s43"
+      ],
+      "top_scores": [
+        0.9474,
+        0.8983,
+        0.889,
+        0.8509,
+        0.8064
+      ]
+    },
+    {
+      "id": "v1-procedural-011",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1773.2482920400798,
+      "retrieved": [
+        "BNSS_2023:s44",
+        "BNSS_2023:s49",
+        "BNSS_2023:s82",
+        "BNSS_2023:s110",
+        "BNSS_2023:s40"
+      ],
+      "gold": [
+        "BNSS_2023:s44"
+      ],
+      "top_scores": [
+        0.9722,
+        0.8299,
+        0.6862,
+        0.5759,
+        0.5268
+      ]
+    },
+    {
+      "id": "v1-procedural-012",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1764.2292918171734,
+      "retrieved": [
+        "BNSS_2023:s47",
+        "BNSS_2023:s36",
+        "BNSS_2023:s83",
+        "BNSS_2023:s48",
+        "BNSS_2023:s82"
+      ],
+      "gold": [
+        "BNSS_2023:s47"
+      ],
+      "top_scores": [
+        0.9915,
+        0.9037,
+        0.8959,
+        0.8842,
+        0.875
+      ]
+    },
+    {
+      "id": "v1-procedural-013",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1765.698374947533,
+      "retrieved": [
+        "BNSS_2023:s48",
+        "BNSS_2023:s36",
+        "BNSS_2023:s356",
+        "BNSS_2023:s82",
+        "BNSS_2023:s47"
+      ],
+      "gold": [
+        "BNSS_2023:s48"
+      ],
+      "top_scores": [
+        0.9982,
+        0.9886,
+        0.7738,
+        0.7635,
+        0.7139
+      ]
+    },
+    {
+      "id": "v1-procedural-014",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1773.6296250950545,
+      "retrieved": [
+        "BNSS_2023:s49",
+        "BNSS_2023:s110",
+        "BNSS_2023:s82",
+        "BNSS_2023:s83",
+        "BNSS_2023:s40"
+      ],
+      "gold": [
+        "BNSS_2023:s49"
+      ],
+      "top_scores": [
+        0.9674,
+        0.9048,
+        0.8972,
+        0.8227,
+        0.7657
+      ]
+    },
+    {
+      "id": "v1-procedural-015",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1841.4623748976737,
+      "retrieved": [
+        "BNSS_2023:s53",
+        "BNSS_2023:s51",
+        "BNSS_2023:s52",
+        "BNSS_2023:s367",
+        "BNSS_2023:s194"
+      ],
+      "gold": [
+        "BNSS_2023:s53"
+      ],
+      "top_scores": [
+        0.9879,
+        0.9522,
+        0.9435,
+        0.7039,
+        0.4469
+      ]
+    },
+    {
+      "id": "v1-procedural-016",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1760.5718330014497,
+      "retrieved": [
+        "BNSS_2023:s54",
+        "BNSS_2023:s36",
+        "BNSS_2023:s82",
+        "BNSS_2023:s83",
+        "BNSS_2023:s53"
+      ],
+      "gold": [
+        "BNSS_2023:s54"
+      ],
+      "top_scores": [
+        0.9881,
+        0.9651,
+        0.9021,
+        0.8672,
+        0.7331
+      ]
+    },
+    {
+      "id": "v1-procedural-017",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1758.6848749779165,
+      "retrieved": [
+        "BNSS_2023:s55",
+        "BNSS_2023:s57",
+        "BNSS_2023:s35",
+        "BNSS_2023:s176",
+        "BNSS_2023:s82"
+      ],
+      "gold": [
+        "BNSS_2023:s55"
+      ],
+      "top_scores": [
+        0.9982,
+        0.8611,
+        0.8446,
+        0.8265,
+        0.7895
+      ]
+    },
+    {
+      "id": "v1-procedural-018",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1837.0832498185337,
+      "retrieved": [
+        "BNSS_2023:s56",
+        "BNSS_2023:s82",
+        "BNSS_2023:s83",
+        "BNSS_2023:s36",
+        "BNSS_2023:s53"
+      ],
+      "gold": [
+        "BNSS_2023:s56"
+      ],
+      "top_scores": [
+        0.9063,
+        0.7094,
+        0.592,
+        0.516,
+        0.5146
+      ]
+    },
+    {
+      "id": "v1-procedural-019",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1792.0272499322891,
+      "retrieved": [
+        "BNSS_2023:s57",
+        "BNSS_2023:s82",
+        "BNSS_2023:s83",
+        "BNSS_2023:s54",
+        "BNSS_2023:s190"
+      ],
+      "gold": [
+        "BNSS_2023:s57"
+      ],
+      "top_scores": [
+        0.9981,
+        0.9885,
+        0.9877,
+        0.9746,
+        0.9722
+      ]
+    },
+    {
+      "id": "v1-procedural-020",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1767.1488339547068,
+      "retrieved": [
+        "BNSS_2023:s58",
+        "BNSS_2023:s187",
+        "BNSS_2023:s170",
+        "BNSS_2023:s78"
+      ],
+      "gold": [
+        "BNSS_2023:s58"
+      ],
+      "top_scores": [
+        0.9871,
+        0.9831,
+        0.9594,
+        0.9256,
+        0.9232
+      ]
+    },
+    {
+      "id": "v1-procedural-021",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1745.9791249129921,
+      "retrieved": [
+        "BNSS_2023:s60",
+        "BNSS_2023:s489",
+        "BNSS_2023:s487",
+        "BNSS_2023:s83",
+        "BNSS_2023:s377"
+      ],
+      "gold": [
+        "BNSS_2023:s60"
+      ],
+      "top_scores": [
+        0.9773,
+        0.8713,
+        0.8505,
+        0.7991,
+        0.7299
+      ]
+    },
+    {
+      "id": "v1-procedural-022",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1749.1000420413911,
+      "retrieved": [
+        "BNSS_2023:s62",
+        "BNSS_2023:s36",
+        "BNSS_2023:s40",
+        "BNSS_2023:s43",
+        "BNSS_2023:s48"
+      ],
+      "gold": [
+        "BNSS_2023:s62"
+      ],
+      "top_scores": [
+        0.9645,
+        0.9214,
+        0.8988,
+        0.8775,
+        0.8565
+      ]
+    },
+    {
+      "id": "v1-procedural-023",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1742.8510000463575,
+      "retrieved": [
+        "BNSS_2023:s63",
+        "BNSS_2023:s123",
+        "BNSS_2023:s68",
+        "BNSS_2023:s285",
+        "BNSS_2023:s64"
+      ],
+      "gold": [
+        "BNSS_2023:s63"
+      ],
+      "top_scores": [
+        0.9425,
+        0.8641,
+        0.7792,
+        0.7459,
+        0.7245
+      ]
+    },
+    {
+      "id": "v1-procedural-024",
+      "category": "procedural",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1739.717209013179,
+      "retrieved": [
+        "BNSS_2023:s64",
+        "BNSS_2023:s68",
+        "BNSS_2023:s66",
+        "BNSS_2023:s71",
+        "BNSS_2023:s70"
+      ],
+      "gold": [
+        "BNSS_2023:s64"
+      ],
+      "top_scores": [
+        0.9819,
+        0.9164,
+        0.9154,
+        0.8991,
+        0.8849
+      ]
+    },
+    {
+      "id": "v1-comparative-000",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 1760.404665954411,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-001",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1750.0845410395414,
+      "retrieved": [
+        "BNS_2023:s318"
+      ],
+      "gold": [
+        "BNS_2023:s318"
+      ],
+      "top_scores": [
+        0.1553,
+        0.1516
+      ]
+    },
+    {
+      "id": "v1-comparative-002",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 1746.1378329899162,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-003",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 1747.7354160510004,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s64"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-004",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1783.443917054683,
+      "retrieved": [
+        "BNS_2023:s152",
+        "BNS_2023:s113"
+      ],
+      "gold": [
+        "BNS_2023:s152"
+      ],
+      "top_scores": [
+        0.4929,
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-comparative-005",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.8217920549213886,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-006",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.7393329869955778,
+      "retrieved": [
+        "BNS_2023:s318"
+      ],
+      "gold": [
+        "BNS_2023:s318"
+      ],
+      "top_scores": [
+        0.1553,
+        0.1516
+      ]
+    },
+    {
+      "id": "v1-comparative-007",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.6604159716516733,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-008",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.5367081612348557,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s64"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-009",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.4953751340508461,
+      "retrieved": [
+        "BNS_2023:s152",
+        "BNS_2023:s113"
+      ],
+      "gold": [
+        "BNS_2023:s152"
+      ],
+      "top_scores": [
+        0.4929,
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-comparative-010",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.4948750138282776,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-011",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.6577498279511929,
+      "retrieved": [
+        "BNS_2023:s318"
+      ],
+      "gold": [
+        "BNS_2023:s318"
+      ],
+      "top_scores": [
+        0.1553,
+        0.1516
+      ]
+    },
+    {
+      "id": "v1-comparative-012",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.5867080762982368,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-013",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.47716707922518253,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s64"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-014",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.5011248867958784,
+      "retrieved": [
+        "BNS_2023:s152",
+        "BNS_2023:s113"
+      ],
+      "gold": [
+        "BNS_2023:s152"
+      ],
+      "top_scores": [
+        0.4929,
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-comparative-015",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.47120894305408,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-016",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.5416660569608212,
+      "retrieved": [
+        "BNS_2023:s318"
+      ],
+      "gold": [
+        "BNS_2023:s318"
+      ],
+      "top_scores": [
+        0.1553,
+        0.1516
+      ]
+    },
+    {
+      "id": "v1-comparative-017",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.46137510798871517,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-018",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.5230419337749481,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s64"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-019",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.5143750458955765,
+      "retrieved": [
+        "BNS_2023:s152",
+        "BNS_2023:s113"
+      ],
+      "gold": [
+        "BNS_2023:s152"
+      ],
+      "top_scores": [
+        0.4929,
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-comparative-020",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.590417068451643,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s103"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-021",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 1.0,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.4811252001672983,
+      "retrieved": [
+        "BNS_2023:s318"
+      ],
+      "gold": [
+        "BNS_2023:s318"
+      ],
+      "top_scores": [
+        0.1553,
+        0.1516
+      ]
+    },
+    {
+      "id": "v1-comparative-022",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.5235001444816589,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-023",
+      "category": "comparative",
+      "recall": 0.0,
+      "precision": 0.0,
+      "mrr": 0.0,
+      "ndcg": 0.0,
+      "latency_ms": 0.5012501496821642,
+      "retrieved": [],
+      "gold": [
+        "BNS_2023:s64"
+      ],
+      "top_scores": []
+    },
+    {
+      "id": "v1-comparative-024",
+      "category": "comparative",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 0.5848330911248922,
+      "retrieved": [
+        "BNS_2023:s152",
+        "BNS_2023:s113"
+      ],
+      "gold": [
+        "BNS_2023:s152"
+      ],
+      "top_scores": [
+        0.4929,
+        0.2653
+      ]
+    },
+    {
+      "id": "v1-citation-000",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "latency_ms": 1710.0286248605698,
+      "retrieved": [
+        "BNSS_2023:s96",
+        "BNSS_2023:s465",
+        "BNSS_2023:s75",
+        "BNSS_2023:s90",
+        "BNSS_2023:s461"
+      ],
+      "gold": [
+        "BNSS_2023:s465"
+      ],
+      "top_scores": [
+        0.8927,
+        0.8623,
+        0.7763,
+        0.7138,
+        0.7018
+      ]
+    },
+    {
+      "id": "v1-citation-001",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1717.9132499732077,
+      "retrieved": [
+        "BNSS_2023:s188",
+        "BNSS_2023:s176",
+        "BNSS_2023:s193"
+      ],
+      "gold": [
+        "BNSS_2023:s188"
+      ],
+      "top_scores": [
+        0.9619,
+        0.9224,
+        0.86,
+        0.831,
+        0.8202
+      ]
+    },
+    {
+      "id": "v1-citation-002",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1800.700332969427,
+      "retrieved": [
+        "BNS_2023:s110",
+        "BNS_2023:s102",
+        "BNS_2023:s105",
+        "BNS_2023:s101"
+      ],
+      "gold": [
+        "BNS_2023:s110"
+      ],
+      "top_scores": [
+        0.8831,
+        0.67,
+        0.6597,
+        0.6239,
+        0.5678
+      ]
+    },
+    {
+      "id": "v1-citation-003",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1764.937249943614,
+      "retrieved": [
+        "BNSS_2023:s248",
+        "BNSS_2023:s339",
+        "BNSS_2023:s338",
+        "BNSS_2023:s18",
+        "BNSS_2023:s19"
+      ],
+      "gold": [
+        "BNSS_2023:s248"
+      ],
+      "top_scores": [
+        0.887,
+        0.8604,
+        0.8589,
+        0.6853,
+        0.6497
+      ]
+    },
+    {
+      "id": "v1-citation-004",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1794.4857080001384,
+      "retrieved": [
+        "BNS_2023:s244",
+        "BNS_2023:s243",
+        "BNS_2023:s320",
+        "BNS_2023:s323",
+        "BNS_2023:s322"
+      ],
+      "gold": [
+        "BNS_2023:s244"
+      ],
+      "top_scores": [
+        0.9764,
+        0.9636,
+        0.468,
+        0.4271,
+        0.3588
+      ]
+    },
+    {
+      "id": "v1-citation-005",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1770.7346661482006,
+      "retrieved": [
+        "BNS_2023:s207",
+        "BNS_2023:s206",
+        "BNS_2023:s73",
+        "BNS_2023:s241",
+        "BNS_2023:s72"
+      ],
+      "gold": [
+        "BNS_2023:s207"
+      ],
+      "top_scores": [
+        0.971,
+        0.767,
+        0.6426,
+        0.5099,
+        0.1644
+      ]
+    },
+    {
+      "id": "v1-citation-006",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1782.8110419213772,
+      "retrieved": [
+        "BNSS_2023:s118",
+        "BNSS_2023:s107",
+        "BNSS_2023:s119",
+        "BNSS_2023:s122",
+        "BNSS_2023:s105"
+      ],
+      "gold": [
+        "BNSS_2023:s118"
+      ],
+      "top_scores": [
+        0.9651,
+        0.7346,
+        0.6896,
+        0.6754,
+        0.6672
+      ]
+    },
+    {
+      "id": "v1-citation-007",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1741.8139171786606,
+      "retrieved": [
+        "BNS_2023:s303",
+        "BNS_2023:s305",
+        "BNS_2023:s309",
+        "BNS_2023:s304"
+      ],
+      "gold": [
+        "BNS_2023:s303"
+      ],
+      "top_scores": [
+        0.5595,
+        0.5584,
+        0.4413,
+        0.3423,
+        0.3405
+      ]
+    },
+    {
+      "id": "v1-citation-008",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1723.8524169661105,
+      "retrieved": [
+        "BNSS_2023:s93",
+        "BNSS_2023:s133",
+        "BNSS_2023:s110",
+        "BNSS_2023:s71"
+      ],
+      "gold": [
+        "BNSS_2023:s93"
+      ],
+      "top_scores": [
+        0.9875,
+        0.9022,
+        0.8983,
+        0.8178,
+        0.7869
+      ]
+    },
+    {
+      "id": "v1-citation-009",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1776.239916915074,
+      "retrieved": [
+        "BNSS_2023:s413",
+        "BNSS_2023:s356",
+        "BNSS_2023:s442",
+        "BNSS_2023:s295",
+        "BNSS_2023:s447"
+      ],
+      "gold": [
+        "BNSS_2023:s413"
+      ],
+      "top_scores": [
+        0.9704,
+        0.8925,
+        0.8824,
+        0.8155,
+        0.6622
+      ]
+    },
+    {
+      "id": "v1-citation-010",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1857.8512920066714,
+      "retrieved": [
+        "BSA_2023:s38",
+        "BSA_2023:s95",
+        "BSA_2023:s161",
+        "BSA_2023:s37",
+        "BSA_2023:s19"
+      ],
+      "gold": [
+        "BSA_2023:s38"
+      ],
+      "top_scores": [
+        0.9909,
+        0.4482,
+        0.4434,
+        0.2041,
+        0.2016
+      ]
+    },
+    {
+      "id": "v1-citation-011",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1791.5060410741717,
+      "retrieved": [
+        "BNSS_2023:s162",
+        "BNSS_2023:s507",
+        "BNSS_2023:s152",
+        "BNSS_2023:s163",
+        "BNSS_2023:s156"
+      ],
+      "gold": [
+        "BNSS_2023:s162"
+      ],
+      "top_scores": [
+        0.9837,
+        0.9669,
+        0.6738,
+        0.629,
+        0.5675
+      ]
+    },
+    {
+      "id": "v1-citation-012",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1758.2490839995444,
+      "retrieved": [
+        "BNSS_2023:s344",
+        "BNSS_2023:s343",
+        "BNSS_2023:s345",
+        "BNSS_2023:s506"
+      ],
+      "gold": [
+        "BNSS_2023:s344"
+      ],
+      "top_scores": [
+        0.8404,
+        0.7578,
+        0.595,
+        0.4816,
+        0.4519
+      ]
+    },
+    {
+      "id": "v1-citation-013",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 0.5,
+      "ndcg": 0.6309297535714575,
+      "latency_ms": 1733.1663330551237,
+      "retrieved": [
+        "BNSS_2023:s5",
+        "BNSS_2023:s145",
+        "BNSS_2023:s260",
+        "BNSS_2023:s367",
+        "BNSS_2023:s531"
+      ],
+      "gold": [
+        "BNSS_2023:s145"
+      ],
+      "top_scores": [
+        0.6177,
+        0.4383,
+        0.4192,
+        0.3291,
+        0.3051
+      ]
+    },
+    {
+      "id": "v1-citation-014",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 0.2,
+      "ndcg": 0.38685280723454163,
+      "latency_ms": 1705.989500042051,
+      "retrieved": [
+        "BNSS_2023:s235",
+        "BNSS_2023:s234",
+        "BNSS_2023:s5",
+        "BNSS_2023:s1",
+        "BNSS_2023:s2"
+      ],
+      "gold": [
+        "BNSS_2023:s2"
+      ],
+      "top_scores": [
+        0.2887,
+        0.2729,
+        0.2118,
+        0.1733,
+        0.164
+      ]
+    },
+    {
+      "id": "v1-citation-015",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1728.9020828902721,
+      "retrieved": [
+        "BNSS_2023:s508",
+        "BNSS_2023:s235",
+        "BNSS_2023:s506",
+        "BNSS_2023:s511"
+      ],
+      "gold": [
+        "BNSS_2023:s508"
+      ],
+      "top_scores": [
+        0.8632,
+        0.1915,
+        0.1556,
+        0.1511
+      ]
+    },
+    {
+      "id": "v1-citation-016",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1765.4788750223815,
+      "retrieved": [
+        "BNSS_2023:s338",
+        "BNSS_2023:s480",
+        "BNSS_2023:s298",
+        "BNSS_2023:s18",
+        "BNSS_2023:s279"
+      ],
+      "gold": [
+        "BNSS_2023:s338"
+      ],
+      "top_scores": [
+        0.94,
+        0.6503,
+        0.5119,
+        0.4702,
+        0.414
+      ]
+    },
+    {
+      "id": "v1-citation-017",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1746.2685410864651,
+      "retrieved": [
+        "BSA_2023:s89",
+        "BSA_2023:s82",
+        "BSA_2023:s80",
+        "BSA_2023:s83",
+        "BSA_2023:s30"
+      ],
+      "gold": [
+        "BSA_2023:s89"
+      ],
+      "top_scores": [
+        0.937,
+        0.665,
+        0.4701,
+        0.4467,
+        0.2896
+      ]
+    },
+    {
+      "id": "v1-citation-018",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1798.5192500054836,
+      "retrieved": [
+        "BNS_2023:s42",
+        "BNS_2023:s39",
+        "BNS_2023:s38",
+        "BNS_2023:s41",
+        "BNS_2023:s30"
+      ],
+      "gold": [
+        "BNS_2023:s42"
+      ],
+      "top_scores": [
+        0.9941,
+        0.994,
+        0.991,
+        0.9853,
+        0.8862
+      ]
+    },
+    {
+      "id": "v1-citation-019",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1693.1420830078423,
+      "retrieved": [
+        "BNSS_2023:s117",
+        "BNSS_2023:s107",
+        "BNSS_2023:s85",
+        "BNSS_2023:s503",
+        "BNSS_2023:s505"
+      ],
+      "gold": [
+        "BNSS_2023:s117"
+      ],
+      "top_scores": [
+        0.9494,
+        0.9206,
+        0.9065,
+        0.8562,
+        0.7396
+      ]
+    },
+    {
+      "id": "v1-citation-020",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.5,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1754.412000067532,
+      "retrieved": [
+        "BNS_2023:s82",
+        "BNS_2023:s71"
+      ],
+      "gold": [
+        "BNS_2023:s82"
+      ],
+      "top_scores": [
+        0.9704,
+        0.1673
+      ]
+    },
+    {
+      "id": "v1-citation-021",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.3333333333333333,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1751.0480410419405,
+      "retrieved": [
+        "BNSS_2023:s479",
+        "BNSS_2023:s187",
+        "BNSS_2023:s297"
+      ],
+      "gold": [
+        "BNSS_2023:s479"
+      ],
+      "top_scores": [
+        0.9752,
+        0.8807,
+        0.5946,
+        0.5045,
+        0.4851
+      ]
+    },
+    {
+      "id": "v1-citation-022",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.25,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1720.5770830623806,
+      "retrieved": [
+        "BNSS_2023:s519",
+        "BNSS_2023:s516",
+        "BNSS_2023:s514",
+        "BNSS_2023:s531"
+      ],
+      "gold": [
+        "BNSS_2023:s519"
+      ],
+      "top_scores": [
+        0.8794,
+        0.7128,
+        0.6944,
+        0.5665,
+        0.5423
+      ]
+    },
+    {
+      "id": "v1-citation-023",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1774.7696249280125,
+      "retrieved": [
+        "BNSS_2023:s38",
+        "BNSS_2023:s340",
+        "BNSS_2023:s36",
+        "BNSS_2023:s482",
+        "BNSS_2023:s40"
+      ],
+      "gold": [
+        "BNSS_2023:s38"
+      ],
+      "top_scores": [
+        0.9686,
+        0.6512,
+        0.2647,
+        0.2641,
+        0.2638
+      ]
+    },
+    {
+      "id": "v1-citation-024",
+      "category": "citation",
+      "recall": 1.0,
+      "precision": 0.2,
+      "mrr": 1.0,
+      "ndcg": 1.0,
+      "latency_ms": 1743.0234579369426,
+      "retrieved": [
+        "BNSS_2023:s320",
+        "BNSS_2023:s325",
+        "BNSS_2023:s322",
+        "BNSS_2023:s319",
+        "BNSS_2023:s306"
+      ],
+      "gold": [
+        "BNSS_2023:s320"
+      ],
+      "top_scores": [
+        0.9765,
+        0.9031,
+        0.8868,
+        0.8769,
+        0.852
+      ]
+    }
+  ]
+}

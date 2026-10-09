@@ -1,0 +1,105 @@
+{
+  "_note": "Authoritative primary sources fetched by scripts/fetch_sources.py. 'url' may be a direct PDF or an India Code handle page (the first English PDF bitstream is resolved). 'fallback_urls' are other official government mirrors.",
+  "sources": [
+    {
+      "id": "BNS_2023",
+      "act_name": "Bharatiya Nyaya Sanhita, 2023",
+      "act_code": "BNS",
+      "act_number": "45 of 2023",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 2,
+      "publisher": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "fallback_urls": [
+        "https://www.indiacode.nic.in/handle/123456789/20062"
+      ],
+      "effective_date": "2024-07-01",
+      "replaces": "IPC_1860"
+    },
+    {
+      "id": "BNSS_2023",
+      "act_name": "Bharatiya Nagarik Suraksha Sanhita, 2023",
+      "act_code": "BNSS",
+      "act_number": "46 of 2023",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 2,
+      "publisher": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250884_2_english_01042024.pdf",
+      "fallback_urls": [
+        "https://indiacode.nic.in/bitstream/123456789/20099/3/A2023-46.pdf",
+        "https://www.indiacode.nic.in/handle/123456789/20099"
+      ],
+      "effective_date": "2024-07-01",
+      "replaces": "CRPC_1973"
+    },
+    {
+      "id": "BSA_2023",
+      "act_name": "Bharatiya Sakshya Adhiniyam, 2023",
+      "act_code": "BSA",
+      "act_number": "47 of 2023",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 2,
+      "publisher": "Gazette of India (Extraordinary), Ministry of Law and Justice - copy hosted by Ministry of Home Affairs",
+      "url": "https://www.mha.gov.in/sites/default/files/250882_english_01042024.pdf",
+      "fallback_urls": [
+        "https://www.indiacode.nic.in/bitstream/123456789/20063/1/aa202347.pdf",
+        "https://www.indiacode.nic.in/handle/123456789/20063"
+      ],
+      "effective_date": "2024-07-01",
+      "replaces": "IEA_1872"
+    },
+    {
+      "id": "IPC_1860",
+      "act_name": "Indian Penal Code, 1860",
+      "act_code": "IPC",
+      "act_number": "45 of 1860",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 1,
+      "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/4219",
+      "fallback_urls": [],
+      "status": "repealed w.e.f. 2024-07-01 by BNS, 2023 (retained for offences committed before that date)"
+    },
+    {
+      "id": "CRPC_1973",
+      "act_name": "Code of Criminal Procedure, 1973",
+      "act_code": "CrPC",
+      "act_number": "2 of 1974",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 1,
+      "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/15272",
+      "fallback_urls": [],
+      "status": "repealed w.e.f. 2024-07-01 by BNSS, 2023"
+    },
+    {
+      "id": "IEA_1872",
+      "act_name": "Indian Evidence Act, 1872",
+      "act_code": "IEA",
+      "act_number": "1 of 1872",
+      "legal_domain": "criminal",
+      "document_type": "statute",
+      "authority_level": 1,
+      "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/15351",
+      "fallback_urls": [],
+      "status": "repealed w.e.f. 2024-07-01 by BSA, 2023"
+    },
+    {
+      "id": "COI",
+      "act_name": "Constitution of India",
+      "act_code": "COI",
+      "legal_domain": "constitutional",
+      "document_type": "constitution",
+      "authority_level": 1,
+      "publisher": "Lok Sabha Secretariat (eParlib, Parliament of India)",
+      "url": "https://eparlib.sansad.in/bitstream/123456789/2982247/1/29-05-27_Constitution_English_Final.pdf",
+      "fallback_urls": []
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+# mlx-lm QLoRA config for NyayShastra (Apple Silicon).
+# Base is quantized to 4-bit first (train_mlx.sh), so LoRA on it == QLoRA.
+model: training/base-4bit            # created from GSMS-B/Indian-Legal-Qwen2.5-3B by train_mlx.sh
+train: true
+data: data/mlx                       # train.jsonl / valid.jsonl / test.jsonl (chat format)
+fine_tune_type: lora
+mask_prompt: true                    # loss on the assistant answer only
+num_layers: 16                       # LoRA on the top 16 transformer blocks
+batch_size: 2
+grad_accumulation_steps: 4           # effective batch 8
+iters: 1500                          # ~1 epoch over 3,006 examples at batch 2 (~6 s/iter on M1 Pro 16 GB)
+learning_rate: 1.5e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  arguments: [1.5e-5, 1500, 1.0e-6]
+lora_parameters:
+  rank: 16
+  scale: 2.0                         # alpha / rank = 32 / 16
+  dropout: 0.05
+  keys: ["self_attn.q_proj", "self_attn.k_proj", "self_attn.v_proj", "self_attn.o_proj",
+         "mlp.gate_proj", "mlp.up_proj", "mlp.down_proj"]
+max_seq_length: 1280                 # longest training example is 1,199 tokens
+grad_checkpoint: true
+steps_per_report: 10
+steps_per_eval: 250
+val_batches: 10
+save_every: 250
+adapter_path: training/adapters/nyay-qlora
+seed: 13
